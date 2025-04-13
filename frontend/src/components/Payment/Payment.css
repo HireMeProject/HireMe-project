@@ -1,0 +1,83 @@
+.payment-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f5f7fa;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Main content */
+.mypayments-wrapper {
+  width: 100%;
+  margin: 20px 40px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);}
+
+/* Header titles */
+.mypayments-header {
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+.mypayments-title{
+  padding-bottom:1rem ;
+  border-bottom:1px solid rgb(162, 162, 162);
+}
+.mypayments-title-list{
+  
+}
+
+/* List container */
+.myPayments-list {
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* Fields (table header) */
+.my-payments-fields-container {
+  display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    font-weight: bold;
+    background: #0056b3;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Payment rows */
+.my-payments {
+  display: flex;
+  flex-direction: column;
+}
+
+.my-payment {
+   display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.my-payment:last-child {
+  border-bottom: none;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .mypayments-header {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .my-payments-fields-container,
+  .my-payment {
+    grid-template-columns: 1fr 1fr;
+    row-gap: 10px;
+  }
+
+  .my-payment > div {
+    padding-right: 10px;
+  }
+}

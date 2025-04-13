@@ -1,0 +1,90 @@
+.AuthImage-container{
+    background-color: #0b122b;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    min-height: 100vh;
+    padding: 0%;
+}
+.logo{
+    width: 180px;
+    position: relative;
+    margin: 20px 40px;
+} 
+.logo-container{
+    box-sizing: content-box;
+    padding: 0;
+    margin: 0;
+}
+.peoplehired-container{
+    background: #fff;
+    width: 10%;
+    text-align: center;
+    /* margin: 25px 25px 0px 20px; */
+    margin: 25px 20% 0 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+    position: fixed;
+    z-index: 2;
+    left: 5%;
+}
+.bi-bar-chart-fill{
+    color:#fac710;
+    font-size: 30px;  
+}
+.peoplehired-container b,
+.peoplehired-container span{
+    font-family:Arial, Helvetica, sans-serif;
+}
+.peoplehired-container span{
+    color: grey;
+}
+.img-container{
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+
+.WorkerImage-container{
+    display: flex;
+    background-image: url(../../assets/WorkerImage.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: auto;
+    width: 100%;
+    min-height: 82vh;
+    height: auto;
+    z-index: 0;
+    position: absolute;
+    bottom: 0%; 
+}
+@media(max-width:787px){
+    .WorkerImage-container{
+        padding-bottom: 0px;
+        /* margin-top: 15%; */
+        background-size: auto;
+    }
+}
+@media (max-width:480px){
+    .AuthImage-container{
+        width: 100%;
+    }
+    .peoplehired-container{
+        position: static;
+        width: 20%;
+    }
+}
+@media(max-height:1024px){
+    .WorkerImage-container{
+      
+        position: absolute;
+        height: auto;
+    }
+}
+
+
+
+

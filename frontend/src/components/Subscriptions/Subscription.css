@@ -1,0 +1,112 @@
+.subscription-container {
+    margin: 0 ;
+    width: 100%;
+    display: flex;
+    min-height: 100vh;
+    font-family: sans-serif;
+}
+.Subscription-wrapper h2{
+    text-align: center;
+    margin-bottom: 0;
+    margin-top: 10vh;
+    font-size: 50px;
+    color: #0b122b;
+    width: 30%;
+    border-radius: 5px;
+    box-shadow:0 4px 6px rgba(0, 0, 0, 0.1);
+
+    margin-inline-start: 36%;
+}
+.subscription-list {
+    list-style-type: none;
+    margin-top:10vh ;
+    width: 100%;
+    max-width: 500px;
+}
+.sub-container{
+    display: flex;
+}
+
+.Subscription {
+    background: white;
+    padding: 20px;
+    margin: 0px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+.subscription-item-title{
+    border-bottom: none;
+    text-align: center;
+    font-size: 26px;
+    z-index: 0;
+    width: 100%;
+    padding: 10px 0;
+    background-color: #0056b3;
+    border-radius: 5px;
+    /* color: #ffdd00; */
+    color:aliceblue;
+    font-weight: 600;
+    margin-bottom: 2rem;
+}
+.subscription-item-price{
+    text-align: center;
+    font-size: 26px;
+    font-weight: bold;
+    color: #0b122b;
+}
+.subs-status{
+    border: 1px solid #ffdd00;
+    padding: 5px;
+    border-radius: 50%;
+    background-color: #ffdd00;
+    padding: 4px 10px;
+
+    font-weight: bold;
+}
+.Subscription:hover {
+    transform: translateY(-5px);
+}
+
+.subscription-item {
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+    font-size: 16px;
+    color: #333;
+}
+
+.subscription-item:last-child {
+    border-bottom: none;
+}
+
+.subscription-item strong {
+    color: #007bff;
+}
+.pay-btn-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.btn-pay {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease-in-out;
+}
+
+.btn-pay:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.btn-pay:active {
+    transform: scale(0.95);
+}
+

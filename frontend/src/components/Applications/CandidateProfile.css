@@ -1,0 +1,135 @@
+/* Main Container Styles */
+.candidate-profile-container {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f8fafc;
+    font-family: sans-serif;
+  }
+  
+  .candidate-profile-wrapper {
+    flex: 1;
+    padding: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Header Styles */
+  .candidate-profile-wrapper h2 {
+    color: #1e293b;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  
+  /* Profile Picture Styles */
+  .candidate-pic-container {
+    display: flex;
+    justify-content: center;
+    margin: 1.5rem 0;
+  }
+  
+  .candidate-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #e2e8f0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Profile Details List Styles */
+  .candidate-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .candidate-item {
+    padding: 1rem;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  
+  .candidate-item:last-child {
+    border-bottom: none;
+  }
+  
+  .candidate-item strong {
+    min-width: 150px;
+    color: #475569;
+    font-weight: 600;
+  }
+  
+  /* Special Field Styles */
+  .candidate-item a {
+    color: #2563eb;
+    text-decoration: none;
+    word-break: break-all;
+  }
+  
+  .candidate-item a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Skills Display */
+  .candidate-item .skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  
+  .candidate-item .skill-pill {
+    background-color: #e0f2fe;
+    color: #0369a1;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+  }
+  
+  /* CV Link Styling */
+  .cv-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  .cv-link:hover {
+    text-decoration: underline;
+  }
+  
+  .cv-link svg {
+    width: 1rem;
+    height: 1rem;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .candidate-profile-container {
+      flex-direction: column;
+    }
+    
+    .candidate-profile-wrapper {
+      padding: 1rem;
+    }
+    
+    .candidate-item {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+    
+    .candidate-item strong {
+      min-width: auto;
+    }
+  }

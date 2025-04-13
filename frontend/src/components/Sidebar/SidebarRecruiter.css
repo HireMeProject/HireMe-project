@@ -1,0 +1,43 @@
+.sidebar{
+    background-color: #0b122b;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+.nav-links-dashboard{
+    display: flex;
+    flex-direction: column;
+    
+}
+.sidebar-link-dashboard{
+    text-decoration: none;
+    color: aliceblue;
+}
+.Logout-Button-area{
+    justify-content: center;
+    margin-top: auto; /* Pousse le bouton vers le bas */
+    padding-bottom: 20px; /* Ajoute un peu d'espace en bas */
+    text-align: center;
+}
+.sidebar-link-dashboard{
+    margin: 5px 0 5px 0;
+}
+.nav-links-dashboard {
+    flex-grow: 1; /* Permet à la liste de prendre tout l’espace disponible */
+}
+.icons-sidebar{
+    margin-right: 5px;
+}
+.active-dashboard{
+    color:#ffdd00 ;
+}
+.Logout-Button {
+    width: 70%;
+    padding: 10px;
+    background-color: #0b122b;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+}

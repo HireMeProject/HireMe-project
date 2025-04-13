@@ -1,0 +1,103 @@
+.applications-wrapper{
+    margin: 0 ;
+    width: 100%;
+    display: flex;
+    min-height: 100vh;
+    font-family: sans-serif;
+}
+.my-applications-header {
+    width: 100%;
+    margin: 20px 40px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);}
+
+.my-applications-title-container {
+    margin-top: 25px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    border-bottom:1px solid rgb(162, 162, 162);
+    padding-bottom:1rem ;
+}
+.my-applications-list-title{
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.my-applications-container {
+    flex: 1;
+    padding: 20px;
+}
+
+.my-applications-filter-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    margin-bottom: 20px;
+}
+
+.filter-status {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: white;
+    cursor: pointer;
+}
+
+.my-applications-list-container {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.my-applications-fields-container {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    font-weight: bold;
+    background: #0056b3;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.my-application {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.my-application:last-child {
+    border-bottom: none;
+}
+
+.application-title,
+.application-name,
+.application-email,
+.application-date,
+.application-status {
+    padding: 5px;
+}
+
+.application-status select {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.check-candidate-profile-btn{
+    margin: 10px;
+    padding: 8px 20px;
+    text-align: center;
+    cursor: pointer;
+    display: flex;
+    border-radius: 5px;
+    background-color: #ffdd00;
+}
+.bi-person-square{
+    margin: 0px 5px;
+}

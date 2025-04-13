@@ -1,0 +1,275 @@
+/* Home page */
+.welcome-container{
+    background-color: #f4f4fd;
+    min-height:89vh;
+   padding-left: 10%;
+}
+.Welcome-part-container{
+    padding-top: 70px;
+}
+.welcome-title {
+    /* background-color: #fff; */
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+}
+.welcome-title span,
+.welcome-title div {
+    font-size: 72px;
+    /* background-color: #fff; */
+    font-family: "Abril Fatface", serif;
+}
+.welcome-search-job-container{
+    background-color: #ffff;
+    width: 55%;
+    display: flex;
+    padding: 10px 20px;
+    justify-content: space-between;
+    flex-direction: row;
+}
+.welcome-search-bar-job i,
+.welcome-search-job-filter-location i,
+.welcome-search-job-filter-location select ,
+.welcome-search-job-button button,
+.welcome-search-bar-job input{
+    font-size: 20px;
+    padding: 8px;
+    border: 1px solid transparent; /* Makes all borders initially transparent */ 
+}
+.welcome-search-bar-job input,
+.welcome-search-job-filter-location select{
+    border-bottom-color: rgb(165, 164, 164);
+}
+.welcome-search-job-button button{
+    cursor: pointer;
+    background-color: #0b122b;
+    color: aliceblue;
+}
+.welcome-search-job-button button:hover{
+    background-color: #26A4FF;
+    color: aliceblue;
+}
+
+/********** Explore by category ***********/
+.Explore-container{
+    display: flex;
+    flex-direction: column;
+    /* background-color: #26A4FF; */
+    padding: 2% 10%;
+}
+.Explore-title-Container{
+    /* background-color: brown; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+.Explore-title{
+    font-size: 48px;
+    font-family: "Abril Fatface", serif;
+}
+.Explore-title span{
+    color: #26A4FF;
+}
+.show-all-jobs-link{
+    font-family: "Roboto" , sans-serif;
+    font-weight: bold;
+    text-decoration: none;
+    color: #26A4FF;
+}
+/* categories container */
+.categories-container{
+    /* background-color: brown; */
+    padding:3% 0;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    
+}
+.category-link{
+    text-decoration: none;
+    border: 1px solid rgba(141, 139, 139, 0.452);
+    padding: 2% 1%;
+    width: 20%;
+    height: 20vh;
+    margin-bottom: 25px;
+}
+.category-link  i{
+    color:#1f3798 ;
+    font-size: 28px;
+}
+.title-category{
+    font-family: "Abril Fatface", serif;
+   color:black ;
+   font-size: 28px;
+   padding: 10px 0px;
+}
+.arrow-category-container{
+   /* background-color: blueviolet; */
+   display: flex;
+   margin-top: 50px;
+   justify-content: end;
+   /* margin-top:10% ; */
+}
+.category-link:hover ,
+.category-link:hover i ,
+.category-link:hover div{
+    border-color: #1f3798;
+    background-color: #1f3798;
+    color: #ffff;
+}
+
+/********** Featured job ***********/
+.Featured-jobs-container{
+    display: flex;
+    flex-direction: column;
+    padding: 2% 10%;
+    background-image: url(../../assets/BG.png);
+}
+.Featured-Jobs-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.Featured-job-link-container{
+    display: flex;
+    background-color: #ffff;
+    width: 43%;
+    margin: 8px 0px;
+    padding: 30px;
+}
+.featured-job-desc{
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+}
+.featured-job-name{
+    font-weight: bold;
+    font-size: 18px;
+    font-family: sans-serif;
+}
+.featured-job-title-location{
+    display: flex;
+    color: gray;
+    font-family: sans-serif;
+    margin: 10px 0;
+}
+.title-featured-job{
+    margin-right: 5px;
+}
+.featured-job-type-category{
+    display: flex;
+}
+.featured-job-type,
+.featured-job-category{
+    font-size: 17px;
+    font-weight: bold;
+    font-family: sans-serif;
+    text-align: center;
+    border-radius: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.featured-job-type{
+    background-color: #56cdad1a;
+    /* background-color: aqua; */
+    color: #56CDAD;
+    width:95px;
+}
+.featured-job-categories{
+    display: flex;
+    margin-left: 5px;
+    border-left:1px solid #808080a2;
+}
+.featured-job-category{
+    margin: 5px;
+    border:1px solid #ffdd00  ;
+    color: #ffdd00 ;
+    width: 90%;
+    padding: 5%;
+}
+/*********media queries***********/
+@media (max-width:1286px){
+    .welcome-search-bar-job i,
+.welcome-search-job-filter-location i,
+.welcome-search-job-filter-location select ,
+.welcome-search-job-button button,
+.welcome-search-bar-job input{
+    font-size: 17px;
+    padding: 6px;
+}
+
+}
+@media (max-width:1088px){
+    .Featured-job-link-container{
+        display: flex;
+        background-color: #ffff;
+        width: 41%;
+        margin: 8px 0px;
+        padding: 4%;
+    }
+    .featured-job-desc{
+        
+        margin-left: 15px;
+        flex-wrap: wrap;
+    }
+    
+}
+@media (max-width:1037px){
+    .Featured-job-link-container{
+        width: 100%;
+    }
+    .Featured-jobs-container{
+        background-repeat: no-repeat;
+        background-image: url(../../assets/BG.png);
+    }
+}
+@media (max-width:976px){
+    /* .welcome-search-job-container{
+        margin-bottom: 50px;
+  
+    } */
+    /* .welcome-container{
+        min-height:100vh;
+       
+    } */
+    /* .welcome-title { */
+        /* background-color: #fff; */
+        /* width: 50%;
+    } */
+    /* .welcome-title{
+        width: 60%;
+    } */
+    .welcome-title span,
+.welcome-title div {
+    font-size: 62px;
+    font-family: "Abril Fatface", serif;
+}
+.welcome-search-job-container{
+    flex-wrap: wrap;
+}
+.welcome-search-job-button button{
+    margin:5px 0 ;
+}
+}
+@media (max-width:841px){
+    .welcome-title span,
+.welcome-title div {
+    font-size: 50px;
+    font-family: "Abril Fatface", serif;
+}
+.welcome-title p{
+    font-size: 1px;
+}
+}
+                    
+
+
+
+
+
+
+
+
