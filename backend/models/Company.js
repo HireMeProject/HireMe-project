@@ -8,7 +8,7 @@ const CompanySchema = new mongoose.Schema({
     },
     sector:{
         type:String,
-        required:true,
+        // required:true,
         trim:true,
     },
     logo:{
@@ -24,16 +24,38 @@ const CompanySchema = new mongoose.Schema({
     },
     employeesNumber:{
         type:String,
-        required:true,
+        // required:true,
     },
     foundedDate:{
         type:Date,
-        required:true,
+        // required:true,
     },
     location:{
         type:String,
-        required:true,
-    }
+        // required:true,
+    },
+    employeesList:[{
+        name:{
+            type:String,
+        },
+        email:{
+            type:String,
+            unique:true,
+        },
+        position:{
+            type:String,
+        },
+        profilePic:{
+            type: Object,
+        default: {
+            url: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__480.png",
+            publicId: null,
+        }
+        },
+        index:{
+            type:Number,
+        },
+    }]
     // listRecruiters:[{
     //     type: mongoose.Schema.Types.ObjectId, 
     //     ref: 'User' ,

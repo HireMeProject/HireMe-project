@@ -111,7 +111,7 @@ const GetMyJobOffers = async (req, res) => {
     const recruiterId = req.user.id;
     const jobOffers = await JobOfferManager.GetMyJobOffers(
       recruiterId,
-      req.query
+      req.query,
     );
     return res.status(200).json({ status: "success", message: jobOffers });
   } catch (error) {

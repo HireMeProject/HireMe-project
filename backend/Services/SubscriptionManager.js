@@ -1,6 +1,7 @@
+const ISubscription = require('../Interface/SubscriptionInterface');
 const {Subscription} = require('../models/Subscription');
 
-class SubscriptionManager {
+class SubscriptionManager extends ISubscription{
    async createSubscription(subscriptionData) {
     const subscription = new Subscription(subscriptionData);
     return await subscription.save();

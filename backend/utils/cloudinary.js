@@ -19,6 +19,23 @@ const cloudinaryUploadImage = async (fileToUpload) => {
   }
 };
 
+//CV uploader
+const cloudinaryUploadCv = async (fileToUpload) => {
+  try {
+    const data = await cloudinary.uploader.upload(fileToUpload, {
+      resource_type: "raw", // obligatoire pour PDF/DOC/DOCX
+      // type: "upload",
+      // upload_preset: "public_raw", // Utilisation du preset
+      // invalidate: true 
+    });
+    console.log("result cloud : ",data);
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Internal Server Error (cloudinary)");
+  }
+};
+
 // Cloudinary Remove Image
 const cloudinaryRemoveImage = async (imagePublicId) => {
   try {
@@ -40,9 +57,22 @@ const cloudinaryRemoveMultipleImage = async (publicIds) => {
     throw new Error("Internal Server Error (cloudinary)");
   }
 };
-
+// Ajoutez dans cloudinary.js
+const cloudinaryRemoveRawFile = async (publicId) => {
+  try {
+    const result = await cloudinary.uploader.destroy(publicId, {
+      resource_type: "raw"
+    });
+    return result;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Internal Server Error (cloudinary)");
+  }
+};
 module.exports = {
+  cloudinaryRemoveRawFile,
   cloudinaryUploadImage,
   cloudinaryRemoveImage,
   cloudinaryRemoveMultipleImage,
+  cloudinaryUploadCv,
 };

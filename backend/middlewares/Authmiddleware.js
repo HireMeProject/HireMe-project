@@ -18,6 +18,21 @@ const VerifyToken=(req,res,next)=>{
         next();
     })
 }
+// Middleware to authenticate JWT for WebSocket connections
+const authenticateSocket = (socket, next) => {
+    const token = socket.handshake.auth.token;
+ 
+    if (!token) return next(new Error('Authentication error'));
+ 
+    jwt.verify(token, process.env.JWT_SECRET_KEY, (err,decoded) => {
+        if(err){
+            console.log(err.message);
+            return next(new Error('Authentication error'));
+        }      
+      socket.user = decoded.userInfo;
+      next();
+    });
+  };
 const verifyAdmin=(req,res,next)=>{
     VerifyToken(req,res,()=>{
         console.log("role",req.user.role)
@@ -79,15 +94,23 @@ const verifySubscriptionRecruiter=async(req,res,next)=>{
     try{
         const userId=req.user.id;
         const paymentDone=await Payment.findOne({client:userId});
-        if(!paymentDone || paymentDone.status==="Failed"){
+        if(paymentDone.status==="Failed"){
             return res.status(401).json({message:"you need to pay first."})
         }
         else if(paymentDone.status==="Succeeded"){
+            const today = new Date();
+            const paymentValid = new Date(paymentDone.paymentDate) > today;
+            if (!paymentValid) {
+            return res.status(401).json({ message: "Your subscription has expired. Please renew." });
+        }
             next();
         }
         else if(paymentDone.status==="Pending"){
             return res.status(400).json({message:"payment status is still pending..."})
         }
+        else  if (paymentDone.status === "Failed") {
+      return res.status(401).json({ message: "payment failed ,  Please retry" });
+    }
     }
     catch(error){
         console.error(error);
@@ -101,4 +124,5 @@ module.exports={
     verifyRecruiter,
     verifyAcountStatus,
     verifySubscriptionRecruiter,
+    authenticateSocket,
 }

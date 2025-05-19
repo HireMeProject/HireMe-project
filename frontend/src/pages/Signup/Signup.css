@@ -1,0 +1,132 @@
+.signup-container{
+    margin: 0 ;
+    width: 100%;
+    display: flex;
+ 
+}
+.signup-form{
+    background: #fff;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1;
+}
+.signup-form-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 50px 0px 0px 0px;
+    width: 55%;
+    justify-content: center;
+}
+/* Role Buttons */
+.Job-Seeker-button,
+.Recruiter-button{
+    color: #1f3995;
+    font-weight: bold;
+    font-family:Arial, Helvetica, sans-serif;
+    border: 0;
+    font-size: 15px;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.Job-Seeker-button{
+    background-color: #a6b7f5;
+}
+.notSelected{
+    background-color: #fff;
+}
+.selected{
+    background-color: #a6b7f5;
+
+}
+/* Title */
+.signup-form-container h2{
+font-family: 'Clash Display Variable';
+font-style: normal;
+font-weight: 600;
+text-align: center;
+font-size: 32px;
+/* Color/Black */
+color: #202430;
+align-self: stretch;
+}
+/* formulaire */
+.signup-form-container form{
+    width: 90%;
+}
+.input-container{
+    display: flex;
+    flex-direction: column;
+}
+.input-container label{
+    font-weight: bold;
+    font-family:Arial, Helvetica, sans-serif;
+    color: rgb(77, 75, 75);
+    margin: 5px 0px;
+}
+.input-Field{
+    margin: 5px 0px;
+    font-size: 15px;
+    padding: 8px;
+    border: 1px solid rgb(158, 157, 157);
+    border-radius: 2px;
+}
+/* Summit Button */
+.SubmitButton-container button{
+    text-align: center;
+    margin: 10px 0px;
+    padding: 10px 0px;
+    width: 100%;
+    font-size: 20px;
+    color: #fff;
+    background: #1f3995;
+    border: 1px solid #1f3995 ;
+    border-radius: 2px;
+    cursor: pointer;
+}
+.SubmitButton-container button:hover{
+    background-color:#365deb;   
+}
+/* Login Button */
+.HaveAnAccount-container p{
+    font-family:Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+.HaveAnAccount-container b{
+    color: #1f3995;
+    cursor: pointer;
+    
+}
+/* Error message*/
+.error-message{
+    color: red;
+    font-family: sans-serif;
+    opacity: 60%;
+    font-size: 0.8em;
+}
+
+/* media queries */
+@media (max-width:864px) {
+    .SubmitButton-container button{
+        text-align: center;
+        margin: 5px 0px;}
+   
+}
+@media (max-width:693px){
+    .RoleSwitch-button{
+        display: flex;
+    }
+}
+@media (max-width:480px){
+    .signup-container{
+        flex-direction: column;
+    }
+    .signup-form{
+        width: 100%;
+    }
+}
+
+

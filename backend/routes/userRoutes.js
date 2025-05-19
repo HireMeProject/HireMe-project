@@ -14,7 +14,8 @@ const { UpdateUser,
 const {verifyAdmin,
     VerifyToken,
     verifyCandidate,
-    verifyRecruiter,}=require("../middlewares/Authmiddleware");
+    verifyRecruiter,
+    authenticateSocket}=require("../middlewares/Authmiddleware");
 const {
     PostJobOffer,
     UpdateJobOffer,
@@ -30,6 +31,8 @@ const {
     updateCategory,
     deleteCategory,
 }=require("../controllers/CategoryController");
+const {getNotificationsByUser,
+    markAsRead,createNotif}=require("../controllers/NotificationController")
 const photoUpload = require("../middlewares/photoUpload");
 const UserManager = require('../Services/UserManager');
 const {companyPhotoUploadCtrl}=require("../controllers/CompanyController");
@@ -62,5 +65,14 @@ router.get("/categories", getAllCategories);
 router.get("/categories/:id", getCategoryById);
 router.put("/categories/:id", updateCategory);
 router.delete("/categories/:id", deleteCategory);
+//notifs
 
+// Créer une notification (ex: pour test ou admin)
+router.post("/notifications", VerifyToken, createNotif);
+
+// Récupérer les notifications de l’utilisateur connecté
+router.get("/notifications", VerifyToken, getNotificationsByUser);
+
+// Marquer comme lue une notification
+router.patch("/notifications/read", VerifyToken, markAsRead);
 module.exports=router;

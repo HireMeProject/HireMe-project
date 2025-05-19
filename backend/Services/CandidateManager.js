@@ -6,8 +6,9 @@ const { Recruiter } = require("../models/Recruiter");
 const mongoose=require("mongoose")
 const joi=require("joi");
 const JobOfferManager=require("../Services/JobOfferManager");
+const ICandidate = require("../Interface/CandidateInterface");
 
-class CandidateManager{
+class CandidateManager extends ICandidate{
     async GetProfile(candidateId){
         const candidate=await Candidate.findById(candidateId);
         const user=await User.findById(candidateId);

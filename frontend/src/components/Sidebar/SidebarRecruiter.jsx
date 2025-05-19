@@ -25,6 +25,7 @@ const SidebarRecruiter = () => {
                     // Suppression des données du localStorage
                     localStorage.removeItem("token");
                     localStorage.removeItem("role");
+                    localStorage.removeItem("profile-picture");
         
                     toast.success("Logout successful! Redirecting...", {
                         position: "top-right",
@@ -79,6 +80,9 @@ const SidebarRecruiter = () => {
                 <img className='logo-navbar' src={logo} alt="" />
 
                         <ul className="nav-links-dashboard">
+                        <Link to="/"  className={`sidebar-link-dashboard `} >
+                        <i class="icons-sidebar bi bi-house"></i>Home
+                            </Link>
                             <Link to="/Dashboard"  className={`sidebar-link-dashboard ${location.pathname==="/Dashboard" ? "active-dashboard" : "" }`} >
                                 <i className="icons-sidebar bi bi-speedometer2"></i>Dashboard
                             </Link>
@@ -86,19 +90,19 @@ const SidebarRecruiter = () => {
                             <i class="icons-sidebar bi bi-person-circle"></i>Profile
                             </Link>
                             <Link to="/my-jobs" className={`sidebar-link-dashboard ${location.pathname==="/my-jobs" ?"active-dashboard":""}`} >
-                            <i class="icons-sidebar bi bi-book-half"></i>My job listing
+                            <i class="icons-sidebar bi bi-briefcase"></i>My job listing
                             </Link>
                             <Link to="/my-applications" className={`sidebar-link-dashboard ${location.pathname==="/my-applications" ?"active-dashboard":""}`} >
-                            <i class="icons-sidebar bi bi-book-half"></i>My applications
+                            <i class="icons-sidebar bi bi-person-lines-fill"></i>My applications
                             </Link>
                             <Link to="/Payments" className={`sidebar-link-dashboard ${location.pathname==="/Payments"?"active-dashboard":""}`} >
                             <i class="icons-sidebar bi bi-wallet"></i>Payments
                             </Link>
                             <Link to="/Subscriptions" className={`sidebar-link-dashboard ${location.pathname==="/Subscriptions"?"active-dashboard":""}`} >
-                            <i class="icons-sidebar bi bi-wallet"></i>Subscriptions
+                            <i class="icons-sidebar bi bi-receipt"></i>Subscriptions
                             </Link>
                             <Link to="/myCompany" className={`sidebar-link-dashboard ${location.pathname==="/myCompany"?"active-dashboard":""}`} >
-                            <i class="icons-sidebar bi bi-wallet"></i>My Company
+                            <i class="icons-sidebar bi bi-building"></i>My Company
                             </Link>
                         </ul>
                         <div className="Logout-Button-area">

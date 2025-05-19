@@ -6,8 +6,9 @@ const {Category}=require("../models/Category");
 const mongoose=require("mongoose")
 const joi=require("joi");
 const { Recruiter } = require("../models/Recruiter");
+const IJobOffer =require("../Interface/JobOfferInterface");
 
-class JobOfferManager{
+class JobOfferManager  extends IJobOffer{
     ValidateJobOffer(obj){
         const schema=joi.object({
             title:joi.string().trim().required().min(2),
@@ -17,6 +18,7 @@ class JobOfferManager{
             salary:joi.number().positive().precision(2).required(),
             status:joi.string().valid("open","closed"),
             category:joi.string(),
+            requirements:joi.string(),
             })
         return schema.validate(obj);
     }
@@ -29,7 +31,7 @@ class JobOfferManager{
             salary:joi.number().positive().precision(2),
             status:joi.string().valid("open","closed"),
             category:joi.string(),
-
+            requirements:joi.string(),
             })
         return schema.validate(obj);
     }
@@ -48,8 +50,8 @@ class JobOfferManager{
         const categoryId=categoryExist._id;
         const recruiter=await Recruiter.findById(recruiterId);
         const companyID=recruiter.companyID.toString();
-        const {title, description, contractType, location, salary, publicationDate, status } = jobData;
-        const newJobOffer=new JobOffer({companyID,categoryId,title, description, contractType, location, salary, publicationDate, status,recruiterId});
+        const {title, description, contractType, location, salary, publicationDate, status ,requirements} = jobData;
+        const newJobOffer=new JobOffer({companyID,categoryId,title, description, contractType, location, salary, publicationDate, status,recruiterId,requirements});
         await newJobOffer.save();
         return newJobOffer;
     }
@@ -110,8 +112,8 @@ class JobOfferManager{
         if (contractType && contractType.length > 0) {
             query.contractType = { $in: contractType.map(type => new RegExp(type, 'i')) };
         }
-        console.log("query : ",queryData.page);
-        console.log("limit : ",queryData.limit);
+        // console.log("query : ",queryData.page);
+        // console.log("limit : ",queryData.limit);
         const jobOffers = await JobOffer.find(query)
             .skip(skip)
             .limit(limit)
@@ -165,6 +167,9 @@ class JobOfferManager{
         const query = {};
         const { category, minsalary, maxsalary, status } = queryData;
         let category_id,jobOfferCategory;
+        const page = parseInt(queryData.page) || 1; // Page actuelle
+        const limit = parseInt(queryData.limit) || 5;
+        const skip = (page - 1) * limit;
         if(category){
             category_id=await Category.findOne({name:category});
             query.categoryId=category_id;
@@ -177,7 +182,7 @@ class JobOfferManager{
         if (status) query.status = { $regex: status, $options: 'i' };
         query.recruiterId = recruiterId; // Filtrer par recruteur
         // Récupérer les offres d'emploi en fonction de la requête
-        const jobOffers = await JobOffer.find(query);
+        const jobOffers = await JobOffer.find(query).skip(skip).limit(limit);
         // Récupérer et ajouter la catégorie à chaque offre d'emploi
         const jobOffersWithCategory = [];
     
@@ -203,8 +208,8 @@ class JobOfferManager{
     
     //Update Job offer 
     async UpdateJobOffer(recruiterId, jobId, jobData) {
-        console.log("data recu",jobData)
-        console.log("job id :",jobId)
+        // console.log("data recu",jobData)
+        // console.log("job id :",jobId)
         const { error } = this.ValidateUpdateJobOffer(jobData);
         if (error) {
             console.log("eror mesage :",error.details[0].message)
@@ -218,7 +223,7 @@ class JobOfferManager{
             throw { status: 403, message: "You can only update your own job offers" };
         }
         const category=jobData.category;
-        const {title, description, contractType, location, salary, publicationDate, status } = jobData;
+        const {title, description, contractType, location, salary, publicationDate, status,requirements } = jobData;
 
             const categoryExist=await Category.findOne({name:category});
         if(!categoryExist){
@@ -230,7 +235,7 @@ class JobOfferManager{
         // Mise à jour de l'offre
         const jobOffer = await JobOffer.findByIdAndUpdate(
             jobId,
-            { $set: {categoryId,title, description, contractType, location, salary, publicationDate, status } },
+            { $set: {categoryId,title, description, contractType, location, salary, publicationDate, status,requirements } },
             { new: true }
         );
         if (!jobOffer) {

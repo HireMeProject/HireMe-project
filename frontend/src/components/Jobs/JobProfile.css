@@ -1,0 +1,266 @@
+/* Job Profile Container */
+.job-profile-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .Job-profile-content-container {
+    background: #FFFFFF;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    border: 1px solid #eaeaea;
+    margin-bottom: 2rem;
+  }
+  
+  /* Header Section */
+  .job-offer-header-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem;
+    background: #f9fafb;
+    border-bottom: 1px solid #eaeaea;
+    gap: 1.5rem;
+  }
+  
+  .header-joboffer-info-container {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex: 1;
+    min-width: 250px;
+  }
+  
+  .header-joboffer-info-container img {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    object-fit: contain;
+    background: white;
+    padding: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border: 1px solid #eee;
+  }
+  
+  .job-offer-header-container h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 0.5rem 0;
+    line-height: 1.3;
+  }
+  
+  .job-offer-header-container div {
+    font-size: 1.1rem;
+    color: #666;
+    font-weight: 500;
+  }
+  
+  /* Apply Button */
+  .btn-apply-job-offer-profile {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 150px;
+    height: fit-content;
+  }
+  
+  .btn-apply-job-offer-profile:hover {
+    background: #1d4ed8;
+    transform: translateY(-2px);
+  }
+  
+  /* Main Job Content Layout */
+  .job {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    padding: 2rem;
+  }
+  
+  .job-desc-location-status-salary-contract-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    grid-column: 1;
+  }
+  
+  .job-offer-requirements-container {
+    grid-column: 2;
+    grid-row: span 2;
+  }
+  
+  /* Description Container */
+  .job-offer-desc-container {
+    grid-column: 1 / -1;
+  }
+  
+  .job-offer-desc-container h2,
+  .job-offer-requirements-container h3 {
+    font-size: 1.3rem;
+    color: #1a1a1a;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #f0f0f0;
+  }
+  
+  .job-offer-desc-container div,
+  .job-offer-requirements-container div {
+    color: #444;
+    line-height: 1.7;
+    font-size: 1rem;
+    white-space: pre-line;
+  }
+  
+  /* Detail Cards */
+  .job-offer-contract-container,
+  .job-offer-location-container,
+  .job-offer-salary-container {
+    background: #FFFFFF;
+    border: 1px solid #eaeaea;
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: all 0.2s ease;
+  }
+  
+  .job-offer-contract-container:hover,
+  .job-offer-location-container:hover,
+  .job-offer-salary-container:hover {
+    border-color: #d4d4d4;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+  
+  .job-offer-contract-container h3,
+  .job-offer-location-container h3,
+  .job-offer-salary-container h3 {
+    font-size: 0.95rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.8rem;
+  }
+  
+  .job-offer-contract-container div,
+  .job-offer-location-container div,
+  .job-offer-salary-container div {
+    font-size: 1.1rem;
+    color: #1a1a1a;
+    font-weight: 500;
+  }
+  
+  /* Requirements Container */
+  .job-offer-requirements-container {
+    background: #FFFFFF;
+    border: 1px solid #eaeaea;
+    border-radius: 8px;
+    padding: 1.5rem;
+    align-self: start;
+  }
+  
+  .job-offer-requirements-container ul {
+    padding-left: 1.5rem;
+    margin: 0;
+  }
+  
+  .job-offer-requirements-container li {
+    margin-bottom: 0.5rem;
+    color: #444;
+    line-height: 1.6;
+  }
+  
+  /* Status Badge */
+  .job-offer-location-container:last-child div {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+  
+  /* Status colors */
+  .job-offer-location-container:last-child div[data-status="open"] {
+    background: #dcfce7;
+    color: #166534;
+  }
+  
+  .job-offer-location-container:last-child div[data-status="closed"] {
+    background: #fee2e2;
+    color: #991b1b;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 1024px) {
+    .job {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    
+    .job-desc-location-status-salary-contract-container {
+      grid-column: 1;
+      grid-template-columns: 1fr 1fr;
+    }
+    
+    .job-offer-requirements-container {
+      grid-column: 1;
+      grid-row: auto;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .job-offer-header-container {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 1.5rem;
+    }
+    
+    .header-joboffer-info-container {
+      width: 100%;
+      margin-bottom: 1.5rem;
+    }
+    
+    .btn-apply-job-offer-profile {
+      width: 100%;
+    }
+    
+    .job-desc-location-status-salary-contract-container {
+      grid-template-columns: 1fr;
+    }
+    
+    .job-offer-header-container h1 {
+      font-size: 1.5rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .header-joboffer-info-container {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+    
+    .job-offer-header-container img {
+      width: 70px;
+      height: 70px;
+    }
+    
+    .job {
+      padding: 1rem;
+    }
+    
+    .job-offer-contract-container,
+    .job-offer-location-container,
+    .job-offer-salary-container,
+    .job-offer-requirements-container {
+      padding: 1.2rem;
+    }
+  }

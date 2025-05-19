@@ -1,33 +1,24 @@
 import { useState } from 'react'
 
 import './App.css'
-import Signup from './components/Auth/Signup/Signup';
+import Signup from './pages/Signup/Signup';
 import { BrowserRouter,Routes,Route,Router } from 'react-router-dom';
-import Login from './components/Auth/Login/Login';
-import Home from './components/Home/Home';
-import Dashboard from './components/Dashboard/Dashboard';
-import Profile from "./components/Profile/Profile"
-import MyJobs from './components/Jobs/myJobs';
-import MyApplications from './components/Applications/MyApplications';
-import CandidateProfile from './components/Applications/CandidateProfile';
-import Subscription from './components/Subscriptions/Subscription';
-import CheckoutForm from './components/Payment/checkoutForm';
-import SuccessPage from './components/Payment/Success';
-import Payment from './components/Payment/Payment';
-import Company from './components/Company/Company';
-import Alljobs from './components/Jobs/Alljobs';
+import Login from './pages/Login/Login';
+import Home from './pages/Home/Home';
+import Dashboard from './pages/Dashboard/Dashboard';
+import Profile from "./pages/Profile/Profile"
+import MyJobs from './pages/MyJobs/myJobs';
+import MyApplications from './pages/Applications/MyApplications';
+import CandidateProfile from './pages/Applications/CandidateProfile';
+import Subscription from './pages/Subscriptions/Subscription';
+import SuccessPage from './pages/Payment/Success';
+import Payment from './pages/Payment/Payment';
+import Company from './pages/Company/Company';
+import Alljobs from './pages/Jobs/Alljobs';
 import JobProfile from './components/Jobs/JobProfile';
-import DashboardCandidate from './components/Dashboard/Dashboard-candidate';
-import ProfileCandidate from './components/Profile/ProfileCandidate';
+import DashboardCandidate from './pages/Dashboard/Dashboard-candidate';
+import ProfileCandidate from './pages/Profile/ProfileCandidate';
 function App() {
-  
-// function SuccessPage() {
-//   return <h2>Paiement réussi ! 🎉</h2>;
-// }
-
-// function CancelPage() {
-//   return <h2>Paiement annulé ❌</h2>;
-// }
 
   return (
     <>

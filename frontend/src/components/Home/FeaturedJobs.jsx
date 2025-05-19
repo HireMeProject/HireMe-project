@@ -11,14 +11,14 @@ import logo8 from "../../assets/comp-logo8.png"
 import background from  "../../assets/BG.png"
 
 const FeaturedJobsItems=[
-    { logo:logo1,job:"Social media assistant",title:'Nomad',location:"Paris, France",jobType:"full-time",category:["Marketing","Design"]},
-    { logo:logo2,job:"Brand designer",title:'Dropbox',location:"San Francisco, Usa",jobType:"full-time",category:["Marketing","Design"]},
-    { logo:logo3,job:"Interactive developer",title:'Terraform',location:"Hamburg, Germany",jobType:"full-time",category:["Marketing","Design"]},
-    { logo:logo4,job:"HR Manager",title:'Packer',location:"Lucern, Switzerland",jobType:"full-time",category:["Marketing","Design"]},
-    { logo:logo5,job:"Social media assistant",title:'Netify',location:"Paris, France",jobType:"full-time",category:["Marketing","Design"]},
-    { logo:logo6,job:"Brand designer",title:'Maze',location:"PSan Francisco, Usa",jobType:"full-time",category:["Marketing","Design"]},
-    { logo:logo7,job:"Interactive developer",title:'Udacity',location:"Hamburg, Germany",jobType:"full-time",category:["Marketing","Design"]},
-    { logo:logo8,job:"HR Manager",title:'Webflow',location:"Lucern, Switzerland",jobType:"full-time",category:["Marketing","Design"]},
+    { logo:logo1,job:"Social media assistant",title:'Nomad',location:"Paris, France",jobType:"full-time",category:["Marketing"]},
+    { logo:logo2,job:"Brand designer",title:'Dropbox',location:"San Francisco, Usa",jobType:"full-time",category:["Marketing"]},
+    { logo:logo3,job:"Interactive developer",title:'Terraform',location:"Hamburg, Germany",jobType:"full-time",category:["Marketing"]},
+    { logo:logo4,job:"HR Manager",title:'Packer',location:"Lucern, Switzerland",jobType:"full-time",category:["Marketing"]},
+    { logo:logo5,job:"Social media assistant",title:'Netify',location:"Paris, France",jobType:"full-time",category:["Marketing"]},
+    { logo:logo6,job:"Brand designer",title:'Maze',location:"PSan Francisco, Usa",jobType:"full-time",category:["Marketing"]},
+    { logo:logo7,job:"Interactive developer",title:'Udacity',location:"Hamburg, Germany",jobType:"full-time",category:["Marketing"]},
+    { logo:logo8,job:"HR Manager",title:'Webflow',location:"Lucern, Switzerland",jobType:"full-time",category:["Marketing"]},
     
 ]
 const FeaturedJobs = () => {

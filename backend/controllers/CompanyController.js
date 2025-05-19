@@ -4,6 +4,7 @@ const { Company } = require("../models/Company");
 const { Recruiter } = require("../models/Recruiter");
 const fs=require("fs");
 const path=require("path");
+const CompanyManager=require("../Services/CompanyManager");
 const {
   cloudinaryUploadImage,
   cloudinaryRemoveImage,
@@ -17,15 +18,8 @@ const {
  */
 const addCompany = async (req, res) => {
   try {
-    const { name, sector, logo } = req.body;
-    const company = await Company.findOne({ name: name });
-    if (company) {
-      return res
-        .status(400)
-        .json({ status: "error", message: "Company already exist" });
-    } 
-    const newCompany=new Company({name,sector,logo});
-    const result=await newCompany.save();
+    const { name } = req.body;
+    const newCompany=await CompanyManager.addCompany(name);
     return res
       .status(200)
       .json({
@@ -34,8 +28,14 @@ const addCompany = async (req, res) => {
         newCompany,
       });
   } catch (error) {
+console.log(error);
+    if (error.status) {
+      return res
+        .status(error.status)
+        .json({ status: "error", message: error.message });
+    }
     return res.status(500).json({ status: "error", message: "Server error" });
-  }
+    }
 };
 /**
  * @desc remove a company
@@ -132,24 +132,45 @@ const GetMyCompany=async(req,res)=>{
 const EditCompany=async(req,res)=>{
   try{
     const recruiterId=req.user.id;
-    const {sector,description,employeesNumber,foundedDate,location}=req.body;
-    const company=await Recruiter.findById(recruiterId).select("companyID");    
+    const company=await CompanyManager.EditCompany(recruiterId,req.body);    
     
-    // const companyID=company.companyID;
-    const companyToEdit=await Company.findByIdAndUpdate(company.companyID,
-      {$set:{sector,description,employeesNumber,foundedDate,location}},
-      {new:true}
-    )
-    console.log("companyID in get members: ",company.companyID)
-    if(!companyToEdit){
-      return res.status(404).json({ status: "error", message: "Company not found" });
-    }
-    return res.status(200).json({ status: "success", message: companyToEdit });
+    return res.status(200).json({ status: "success", message: company });
   }
   catch(error){
-    console.log(error);
+   console.log(error);
+    if (error.status) {
+      return res
+        .status(error.status)
+        .json({ status: "error", message: error.message });
+    }
     return res.status(500).json({ status: "error", message: "Server error" });
-}
+    }
+  }
+
+/**
+ * @desc add Emp to company  
+ * @route /companies
+ * @method post
+ * @access public
+ */
+const addEmployee=async(req,res)=>{
+   try{
+    const {companyId}=req.params;
+    const {email,name,position}=req.body;
+    const company=await CompanyManager.addEmployee(name,email,position,companyId);    
+    console.log("donnée renvoyés : ",company);
+    
+    return res.status(200).json({ status: "success", message: company });
+  }
+  catch(error){
+   console.log(error);
+    if (error.status) {
+      return res
+        .status(error.status)
+        .json({ status: "error", message: error.message });
+    }
+    return res.status(500).json({ status: "error", message: "Server error" });
+    }
 }
 
 /**-----------------------------------------------
@@ -237,6 +258,72 @@ const GetMembers=async(req,res)=>{
     return res.status(500).json({ status: "error", message: "Server error" });
 }
 }
+/**-----------------------------------------------
+ * @desc    Employee Profile Photo Upload
+ * @route   /api/users/profile/profile-photo-upload/:companyName/:indexEmp
+ * @method  POST
+ * @access  private (only logged in user)
+ ------------------------------------------------*/
+ const employeeProfilePhotoUploadCtrl = async (req, res) => {
+    try{
+        // 1. Validation
+    if (!req.file) {
+        return res.status(400).json({ message: "no file provided" });
+      }
+    
+      // 2. Get the path to the image
+      const imagePath = path.join(__dirname, `../images/${req.file.filename}`);
+      console.log("image path : ",imagePath);
+
+      // 3. Upload to cloudinary
+      const result = await cloudinaryUploadImage(imagePath);
+
+      //recuperation du company 
+      const {name}=req.params;
+    const index = parseInt(req.query.index, 10);
+    if (isNaN(index)) {
+      return res.status(400).json({ message: "Index invalide" });}
+
+      const company=await Company.findOne({name:name});
+      if (!company || !company.employeesList || !company.employeesList[index]) {
+              console.log("probleme at employés introuvable ");
+
+       return res.status(404).json({ status: "error", message: "Employé introuvable" });
+      }
+      const employee = company.employeesList[index];
+            console.log("image upload index : ",index);
+      console.log(" emp index : ",employee);
+
+      // 5. Delete the old profile photo if exist
+      if (employee.profilePic?.publicId !== null) {
+        await cloudinaryRemoveImage(employee.profilePic.publicId);
+      }
+      // console.log("id public : ",user.profilePhoto.publicId)
+    
+      // 6. Change the profilePhoto field in the DB
+      employee.profilePic = {
+        url: result.secure_url,
+        publicId: result.public_id,
+      };
+      console.log(employee.profilePic.url)
+      await company.save();
+       fs.unlinkSync(imagePath);
+      // 7. Send response to client
+      return res.status(200).json({
+        message: "your employee profile photo uploaded successfully",
+        profilePic: { url: result.secure_url, publicId: result.public_id },
+      });
+    
+
+    }
+    catch(error){
+        console.log(error.message)
+        return res.status(600).json({ status: "error", message: error.message });
+    }
+    
+  };
+  
+  
 module.exports = {
   addCompany,
   DeleteCompany,
@@ -245,4 +332,6 @@ module.exports = {
   GetMembers,
   companyPhotoUploadCtrl,
   EditCompany,
+  employeeProfilePhotoUploadCtrl,
+  addEmployee,
 };

@@ -8,10 +8,11 @@ const joi=require("joi");
 const JobOfferManager=require("../Services/JobOfferManager");
 const ApplicationManager=require("../Services/ApplicationManager");
 const CandidateManager=require("../Services/CandidateManager");
+const IRecruiter = require("../Interface/RecruiterInterface");
 
-class RecruiterManager{
+class RecruiterManager extends IRecruiter{
     async GetProfile(recruiterId){
-        const recruiter=await Recruiter.findById(recruiterId).populate("companyID","name").lean();
+        const recruiter=await Recruiter.findById(recruiterId).populate("companyID","name logo").lean();
         const companyLogo=await Recruiter.findById(recruiterId).populate("companyID","logo").lean();
         const user=await User.findById(recruiterId);
         if(recruiter){
@@ -26,7 +27,7 @@ class RecruiterManager{
                 birthDate:user.birthDate,  // Adresse de l'utilisateur
                 gender: user.gender, // Statut du recruteur
                 status: user.status, // Statut du recruteur
-                // companyLogo:companyLogo.companyID.logo,
+                companyLogo:recruiter.companyID.logo,
                 company: recruiter.companyID.name,  // Nom de la société (peuplé via populate)
                 role: user.role  // Rôle du recruteur (par exemple, "recruiter")
             };

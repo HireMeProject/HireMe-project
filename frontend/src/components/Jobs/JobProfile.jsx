@@ -5,6 +5,9 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import FeaturedJobs from "../Home/FeaturedJobs";
+import "./JobProfile.css"
+import Footer from "../Footer/Footer"
 const JobProfile = () => {
   const [job, setJob] = useState({});
   const token = localStorage.getItem("token");
@@ -82,6 +85,8 @@ const JobProfile = () => {
 
           </div>
           <div className="job">
+          <div className="job-desc-location-status-salary-contract-container">
+
             <div className="job-offer-desc-container">
               <h2>Description</h2>
               <div>{job?.description}</div>
@@ -98,13 +103,20 @@ const JobProfile = () => {
               <h3>Salary</h3>
               <div>{job?.salary}</div>
             </div>
+            
             <div className="job-offer-location-container">
               <h3>Status</h3>
-              <div>{job?.status}</div>
+              <div data-status={job?.status}>{job?.status}</div>
+            </div>
+            </div>
+            <div className="job-offer-requirements-container">
+              <h3>Job requirements</h3>
+              <div>{job?.requirements}</div>
             </div>
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

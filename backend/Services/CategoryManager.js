@@ -1,6 +1,7 @@
+const ICategory = require("../Interface/CategoryInterface");
 const { Category } = require("../models/Category");
 
-class CategoryManager {
+class CategoryManager extends ICategory{
     // Créer une nouvelle catégorie
      async createCategory(name) {
         if (!name) {

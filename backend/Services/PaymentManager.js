@@ -3,57 +3,11 @@ const {Subscription} = require('../models/Subscription');
 const {User} = require('../models/User');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const { Recruiter } = require('../models/Recruiter');
+const IPayment = require('../Interface/PaymentInterface');
 
 
-class PaymentManager {
-  //  async processPayment(userId, paymentData) {
-  //   const subscription = await Subscription.findById(paymentData.subscriptionId);
-  //   if (!subscription)throw { status: 404,message:'Subscription not found'};
-
-  //   const expiryDate = new Date(
-  //     Date.now() + subscription.duration * 24 * 60 * 60 * 1000
-  //   );
-
-  //   const payment = new Payment({
-  //     user: userId,
-  //     subscription: paymentData.subscriptionId,
-  //     card: paymentData.paymentMethod === 'card' ? paymentData.cardId : null,
-  //     amount: subscription.price,
-  //     paymentMethod: paymentData.paymentMethod,
-  //     status: 'completed',
-  //     expiryDate
-  //   });
-
-  //   const savedPayment = await payment.save();
-
-  //   await User.findByIdAndUpdate(userId, {
-  //     'subscription.currentPlan': paymentData.subscriptionId,
-  //     'subscription.status': 'active',
-  //     'subscription.expiryDate': expiryDate,
-  //     $push: { paymentHistory: savedPayment._id }
-  //   });
-
-  //   return savedPayment;
-  // }
-
-  //  async getPaymentHistory(userId) {
-
-  //   return await Payment.find({ user: userId })
-  //     .populate('subscription', '_id name price duration')
-  //     .sort({ paymentDate: -1 });
-  // }
-  // async createPayment(recruiterId,subsId){
-  //   console.log("key : ",process.env.STRIPE_SECRET_KEY);
-  //   const subscription= await Subscription.findById(subsId);
-  //   if (!subscription) {
-  //     throw {status:404,message:'subscription not found'};
-  //   }
-  //   const PaymentExist=await Payment.findOne({subscription:subsId,client:recruiterId});
-  //   if(PaymentExist){
-  //       return res.status(404).json({ message: 'Payment Already Done for this Subscription' });
-  //   }
-  // }
-  async createCheckoutSession(recruiterId, subscriptionId) {
+class PaymentManager extends IPayment{
+   async createCheckoutSession(recruiterId, subscriptionId) {
     try {
         console.log("error 111 " )
 

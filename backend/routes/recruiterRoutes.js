@@ -38,7 +38,11 @@ const {
   GetMyCompany,
   GetMembers,
   EditCompany,
+  employeeProfilePhotoUploadCtrl,
+  addEmployee,
 }=require("../controllers/CompanyController");
+const photoUpload = require("../middlewares/photoUpload");
+
 // const { verifyPayment } = require('../Services/PaymentManager');
 
 router.route("/profile").get(verifyRecruiter,verifyAcountStatus,GetProfile);
@@ -68,6 +72,11 @@ router.get("/companies",GetAllCompanies );
 router.get("/mycompany",verifyRecruiter,GetMyCompany);
 router.patch("/mycompany",verifyRecruiter,EditCompany);
 router.get("/mycompany-members",VerifyToken,GetMembers );
+router.route("/mycompany/addMembers/:companyId").post(verifyRecruiter,addEmployee);
+//edit employee profile pic
+router.route("/mycompany/:name/employee-photo-upload")
+  .post(VerifyToken, photoUpload.single("image"), employeeProfilePhotoUploadCtrl);
+
 
 
 module.exports=router 

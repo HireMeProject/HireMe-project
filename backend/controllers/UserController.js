@@ -79,11 +79,43 @@ const logout = (req, res) => {
  */
 const UpdateUser=async(req,res)=>{
     try {
+        // if (!req.file) {
+        //     console.log("ici a 1");
+    
+        //     return res.status(400).json({ message: "no file provided" });
+        //   }
         const userId=req.user.id;
         console.log("user : ",req.body);
         
-        const updatedUser = await UserManager.updateUser(userId, req.body);
+        const updatedUser = await UserManager.updateUser(userId, req.body,req.file);
         return res.status(200).json({ status: "success", message: "User updated successfully", user: updatedUser });
+    } catch (error) {
+        console.log("error 500 ",error.message)
+
+        if (error.status) {
+            return res.status(error.status).json({ status: "error", message: error.message });
+        }
+        return res.status(500).json({ status: "error", message: error.message });
+    }
+}
+/**
+ * @desc Update User 
+ * @route /users
+ * @method put
+ * @access private
+ */
+const updateUserCV=async(req,res)=>{
+    try {
+        console.log("req file ",req.file)
+        if (!req.file) {
+            console.log("ici a 1");
+            return res.status(400).json({ message: "no file provided" });
+          }
+        const userId=req.user.id;
+        console.log("user : ",req.body);
+        
+        const updatedUser = await UserManager.updateUserCV(userId,req.file);
+        return res.status(200).json({ status: "success", message: "Cv updated successfully", user: updatedUser });
     } catch (error) {
         console.log("error 500 ",error.message)
 
@@ -251,7 +283,7 @@ const DeleteUser=async(req,res,next)=>{
         publicId: result.public_id,
       };
       await user.save();
-    
+    console.log("user ilg secure-url",result.secure_url);
       // 7. Send response to client
       res.status(200).json({
         message: "your profile photo uploaded successfully",
@@ -267,6 +299,7 @@ const DeleteUser=async(req,res,next)=>{
     }
     
   };
+  
   
 
 
@@ -284,4 +317,5 @@ module.exports={
     logout,
     UpdateUserProfile,
     profilePhotoUploadCtrl,
+    updateUserCV,
 }
