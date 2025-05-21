@@ -1,6 +1,6 @@
 import "./Profile.css";
 import SidebarRecruiter from "../../components/Sidebar/SidebarRecruiter";
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast, ToastContainer } from 'react-toastify';
 import { IoMail } from "react-icons/io5";
@@ -55,6 +55,7 @@ const Profile = () => {
             setUser(response.data.recruiter);
             const {companyLogo,...recruiterData}=response.data.recruiter;
             setNewData(recruiterData);
+             setEditMode(false);
             // setEditMode(false);
             //localStorage.setItem("profile-picture",response.data.recruiter.profilePhoto.url);
 

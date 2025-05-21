@@ -124,6 +124,33 @@ const GetMyCompany=async(req,res)=>{
 }
 }
 /**
+ * @desc get company by Id 
+ * @route /companies
+ * @method get
+ * @access public
+ */
+const GetCompanyById=async(req,res)=>{
+  try{
+    const {id}=req.params;
+    const company=await Company.findById(id);
+    const recruiterEmail=await Company.findOne({companyID:id});
+    const companyProfile={
+      ...company.toObject()
+    }
+    if(!company){
+            return res.status(404).json({ status: "error", message: company });
+
+    }
+          return res.status(200).json({ status: "success", message: company });
+
+    
+  }
+  catch(error){
+    console.log(error);
+    return res.status(500).json({ status: "error", message: "Server error" });
+}
+}
+/**
  * @desc edit company  
  * @route /companies
  * @method patch
@@ -334,4 +361,5 @@ module.exports = {
   EditCompany,
   employeeProfilePhotoUploadCtrl,
   addEmployee,
+  GetCompanyById,
 };

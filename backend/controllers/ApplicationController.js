@@ -40,7 +40,8 @@ const CreateApplication=async(req,res)=>{
 const GetMyApplications=async(req,res)=>{
     try{
     const candidateID=req.user.id;
-    const applications= await ApplicationManager.GetMyApplications(candidateID);
+    console.log("candidateID: ",candidateID)
+    const applications= await ApplicationManager.GetMyApplications(candidateID,req.query);
     return res
       .status(200)
       .json({

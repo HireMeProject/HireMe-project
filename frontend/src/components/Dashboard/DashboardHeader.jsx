@@ -9,6 +9,7 @@ const DashboardHeader = ({setSearchTerm,searchTerm}) => {
     const [notifications, setNotifications] = useState([]);
     const [unreadCount, setUnreadCount] = useState(0);
     const token = localStorage.getItem("token");
+    const role=localStorage.getItem("role");
     const [showNotifications, setShowNotifications] = useState(false);
     const socketRef = useRef(null);
 
@@ -17,18 +18,32 @@ const DashboardHeader = ({setSearchTerm,searchTerm}) => {
             try {
               // //console.log("Token récupéré pour la requête :", token);
               ////console.log("role :", role);
-        
-              const response = await axios.get("http://localhost:8000/profile", {
+              let response="";
+              if(role==="recruiter"){
+
+ 
+               response = await axios.get("http://localhost:8000/profile", {
                 headers: {
                   Authorization: `Bearer ${token}`,
                   'Content-Type': 'application/json',
                 },
                 validateStatus: (status) => true,
-              });
-              // console.log("Réponse du serveur dans user profile methode fetch:", response.data);
-              setUser(response.data.recruiter);
-              localStorage.setItem("profile-picture",response.data.recruiter.profilePhoto.url);
-              // reset(response.data.user);
+              });            
+                          localStorage.setItem("profile-picture",response.data.recruiter.profilePhoto.url);
+               setUser(response.data.recruiter);
+}
+              else if(role==="candidate"){
+                response = await axios.get("http://localhost:8000/candidate/profile", {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                  'Content-Type': 'application/json',
+                },
+                validateStatus: (status) => true,
+              });          
+              localStorage.setItem("profile-picture",response.data.candidate.profilePhoto.url);
+                 setUser(response.data.candidate);
+
+              }
             } catch (error) {
               console.error("Error fetching profile:", error.response?.data || error.message);
             }
@@ -37,6 +52,9 @@ const DashboardHeader = ({setSearchTerm,searchTerm}) => {
 
     },[token])
     //notifications
+    if(role==="recruiter"){
+
+    
     useEffect(() => {
      
       const fetchNotifications = async () => {
@@ -69,6 +87,7 @@ const DashboardHeader = ({setSearchTerm,searchTerm}) => {
         socketRef.current.disconnect();
       };
     }, [token]);
+  }
     const handleOpenNotifications = async() => {
       setShowNotifications(true);
       if(showNotifications===true){
@@ -106,7 +125,8 @@ const DashboardHeader = ({setSearchTerm,searchTerm}) => {
                 />
               </div>
               <div className="user-actions">
-                <div className='notification_container'>
+                {role==="recruiter"?(
+              <div className='notification_container'>
                 <button onClick={handleOpenNotifications} className="notification-btn">
                   <FiBell />
                   <span className="badge" >{unreadCount}</span>
@@ -123,6 +143,11 @@ const DashboardHeader = ({setSearchTerm,searchTerm}) => {
                     </ul>
                   </div>
                   </div>
+                ):(
+                  <>
+                  </>
+                )}
+               
 
                 <div className="user-profile">
                   <img src={user?.profilePhoto.url} alt="User" />

@@ -1,26 +1,4 @@
-// import { useEffect, useState } from "react";
-// import "./Dashboard.css";
-// import { Link, useLocation, useNavigate } from "react-router-dom";
-// import axios from "axios";
-// import SidebarRecruiter from "../Sidebar/SidebarRecruiter";
-// const Dashboard = () => {
-//     const navigate=useNavigate();
-//     const [activeLink,setActiveLink]=useState("");
-//     const [Loading,setLoading]=useState(true);
-//     const [error,setError]=useState("");
-//     const [username,setUsername]=useState('');
-//     return (
-//         <div className="Dashboard-Wrapper-Container">
-//             <div className="Dashboard-Container">
-//                 <SidebarRecruiter />
-               
 
-//             </div>
-//         </div>
-//       );
-// }
- 
-// export default Dashboard;
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {  BarChart, 

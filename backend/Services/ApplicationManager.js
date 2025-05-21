@@ -7,6 +7,7 @@ const joi=require("joi");
 const JobOfferManager=require("./JobOfferManager");
 const {createNotification}=require("../Services/NotificationManager");
 const ApplicationInterface=require("../Interface/ApplicationsInterface");
+const { Company } = require("../models/Company");
 
 class ApplicationManager extends ApplicationInterface{
     async CreateApplication(candidateID,jobID){
@@ -35,17 +36,29 @@ class ApplicationManager extends ApplicationInterface{
     }
     //GEt My applications candidat
     async GetMyApplications(candidateID,queryData){
+        console.log("candidateId :   ",candidateID.toString())
+        candidateID=candidateID.toString();
          const query = {};
         const { page, limit, status } = queryData;
         const pageQ = parseInt(page) || 1; // Page actuelle
         const limitQ = parseInt(limit) || 5;
         const skip = (pageQ - 1) * limitQ;
         if (status) query.status = { $regex: status, $options: 'i' };
-        const applications=await Application.find({candidateID,query}).skip(skip).limit(limitQ);
-        if (applications.length === 0) {
-            return "this list is empty";
+        const appsWithCompanyName=[];
+        const applications=await Application.find({candidateID,...query}).skip(skip).limit(limitQ);
+        for (let app of applications){
+            const companyName=await JobOffer.findById(app.jobID).populate("companyID","name");
+            if (!companyName)  throw { status: 404, message: "Category doesn't exist" };
+            const appWithCompanyName={
+                ...app.toObject(),
+                company:companyName.companyID,
+
+                jobTitle:companyName.title,
+            }
+            appsWithCompanyName.push(appWithCompanyName);
         }
-        return applications;
+       
+        return appsWithCompanyName;
     }
     //user(Admin)
     async GetAllApplications(query,recruiterId){

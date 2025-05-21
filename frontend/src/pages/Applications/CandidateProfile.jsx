@@ -80,13 +80,7 @@ console.log("id candidate response:", applicationId);
                     >
                       My CV
                     </a>
-                    {/* <a 
-                      href={candidateProfile.cv.url} 
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      (Voir en ligne)
-                    </a> */}
+                
                   </>
                 ) : (
                   <span>Aucun CV disponible</span>

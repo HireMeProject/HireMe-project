@@ -22,7 +22,9 @@ class CandidateManager extends ICandidate{
                 status: user.status, // Statut du recruteur
                 cv:candidate.cv,
                 skills: candidate.skills,  
-                role: user.role  // Rôle du recruteur
+                role: user.role , // Rôle du recruteur
+                birthDate:user.birthDate,  // Adresse de l'utilisateur
+                gender: user.gender, 
             };
             return candidateProfile;
         }

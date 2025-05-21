@@ -18,6 +18,7 @@ import Alljobs from './pages/Jobs/Alljobs';
 import JobProfile from './components/Jobs/JobProfile';
 import DashboardCandidate from './pages/Dashboard/Dashboard-candidate';
 import ProfileCandidate from './pages/Profile/ProfileCandidate';
+import MyAppsCand from './pages/Applications/MyAppsCand';
 function App() {
 
   return (
@@ -40,6 +41,7 @@ function App() {
 
         <Route path='/Dashboard-candidate' element={<DashboardCandidate />} />
         <Route path='/profile-candidate' element={<ProfileCandidate />} />
+        <Route path='/my-applications-candidate' element={<MyAppsCand />} />
 
         {/* <Route path='/success-payment'/> */}
       </Routes>

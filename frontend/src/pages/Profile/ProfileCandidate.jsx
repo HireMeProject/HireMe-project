@@ -1,204 +1,3 @@
-// import "./Profile.css";
-// import SidebarCandidate from "../../components/Sidebar/SidebarCandidate";
-// import React, { useEffect, useState } from "react";
-// import { useForm } from "react-hook-form";
-// import { toast, ToastContainer } from 'react-toastify';
-// import axios from "axios";
-// import 'react-toastify/dist/ReactToastify.css';
-
-// const ProfileCandidate = () => {
-//   const [editMode, setEditMode] = useState(false);
-//   const [user, setUser] = useState(null);
-//   const [cvFile, setCvFile] = useState(null);
-//   const [profilePhotoFile, setProfilePhotoFile] = useState(null);
-//   const token = localStorage.getItem("token");
-//   const [loading, setLoading] = useState(false);
-
-//   const { register, handleSubmit, reset } = useForm();
-
-//   useEffect(() => {
-//     const fetchUserProfile = async () => {
-//       try {
-//         const response = await axios.get("http://localhost:8000/candidate/profile", {
-//           headers: { Authorization: `Bearer ${token}` }
-//         });
-//         setUser(response.data.candidate);
-//         reset(response.data.candidate);
-//       } catch (error) {
-//         toast.error("Erreur lors du chargement du profil");
-//       }
-//     };
-//     fetchUserProfile();
-//   }, [token, reset]);
-
-//   const handleEditToggle = () => setEditMode(!editMode);
-
-//   const onSubmit = async (data) => {
-//     setLoading(true);
-//     const formData = new FormData();
-    
-//     // Ajoute le CV si présent
-//     if (cvFile) {
-//       formData.append("cv", cvFile);
-//     }
-    
-//     // Ajoute les données textuelles
-//     Object.keys(data).forEach(key => {
-//       if (key !== "cv" && data[key] !== undefined) {
-//         formData.append(key, data[key]);
-//       }
-//     });
-
-//     try {
-//       const response = await axios.patch(
-//         "http://localhost:8000/candidate/update-profile",
-//         formData,
-//         {
-//           headers: {
-//             Authorization: `Bearer ${token}`,
-//             'Content-Type': 'multipart/form-data'
-//           }
-//         }
-//       );
-
-//       if (response.status === 200) {
-//         setUser(response.data.user);
-//         toast.success("Profil mis à jour avec succès !");
-//         setEditMode(false);
-//         setCvFile(null);
-//       }
-//     } catch (error) {
-//       console.error("Update error:", error);
-//       toast.error(error.response?.data?.message || "Erreur lors de la mise à jour");
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   const handleFileChange = (e, setFileFunction) => {
-//     if (e.target.files && e.target.files[0]) {
-//       setFileFunction(e.target.files[0]);
-//     }
-//   };
-
-//   const profileFields = [
-//     { label: "Nom", field: "name", type: "text" },
-//     { label: "Email", field: "email", type: "email" },
-//     { label: "Téléphone", field: "phoneNumber", type: "text" },
-//     { label: "Date de naissance", field: "birthDate", type: "date" },
-//     { label: "Adresse", field: "address", type: "text" },
-//     { label: "Compétences", field: "skills", type: "text" }
-//   ];
-
-//   return (
-//     <div className="Profile-wrapper-container">
-//       <ToastContainer />
-//       <SidebarCandidate />
-      
-//       <div className="profile-container">
-//         {!editMode ? (
-//           <>
-//             <h2>Mon Profil</h2>
-//             <div className="profile-info">
-//               <img 
-//                 src={user?.profilePhoto?.url || "/default-profile.png"} 
-//                 alt="Profile" 
-//                 className="profile-pic" 
-//               />
-              
-//               <div className="profile-details">
-//                 {profileFields.map(({label, field}) => (
-//                   user?.[field] && (
-//                     <div key={field} className="profile-field">
-//                       <strong>{label}:</strong> 
-//                       <span>{Array.isArray(user[field]) ? user[field].join(", ") : user[field]}</span>
-//                     </div>
-//                   )
-//                 ))}
-                
-//                 <div className="profile-field">
-//                   <strong>CV:</strong>
-//                   {user?.cv?.file ? (
-//                     <a 
-//                       href={`http://localhost:8000/${user.cv.file}`} 
-//                       target="_blank" 
-//                       rel="noopener noreferrer"
-//                       className="cv-link"
-//                     >
-//                       {user.cv.name}
-//                     </a>
-//                   ) : "Aucun CV téléchargé"}
-//                 </div>
-//               </div>
-//             </div>
-            
-//             <button onClick={handleEditToggle} className="edit-button">
-//               Modifier le profil
-//             </button>
-//           </>
-//         ) : (
-//           <form onSubmit={handleSubmit(onSubmit)} className="edit-form">
-//             <h2>Modifier le profil</h2>
-            
-//             {/* Champs de formulaire */}
-//             {profileFields.map(({label, field, type}) => (
-//               <div key={field} className="form-group">
-//                 <label>{label}</label>
-//                 {field === "skills" ? (
-//                   <textarea
-//                     {...register(field)}
-//                     defaultValue={Array.isArray(user?.[field]) ? user[field].join(", ") : user?.[field]}
-//                   />
-//                 ) : (
-//                   <input
-//                     type={type || "text"}
-//                     {...register(field)}
-//                     defaultValue={user?.[field]}
-//                   />
-//                 )}
-//               </div>
-//             ))}
-            
-//             {/* Champ CV */}
-//             <div className="form-group">
-//               <label>CV (PDF uniquement)</label>
-//               <input
-//                 type="file"
-//                 accept="application/pdf"
-//                 onChange={(e) => handleFileChange(e, setCvFile)}
-//               />
-//               {cvFile && (
-//                 <span className="file-info">Fichier sélectionné: {cvFile.name}</span>
-//               )}
-//               {user?.cv?.file && !cvFile && (
-//                 <div className="current-file">
-//                   CV actuel: <a href={`http://localhost:8000/${user.cv.file}`} target="_blank">{user.cv.name}</a>
-//                 </div>
-//               )}
-//             </div>
-            
-//             {/* Boutons */}
-//             <div className="form-actions">
-//               <button type="submit" disabled={loading} className="save-button">
-//                 {loading ? "Enregistrement..." : "Enregistrer"}
-//               </button>
-//               <button 
-//                 type="button" 
-//                 onClick={handleEditToggle} 
-//                 className="cancel-button"
-//               >
-//                 Annuler
-//               </button>
-//             </div>
-//           </form>
-//         )}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default ProfileCandidate;
-
 import "./Profile.css";
 import SidebarCandidate from "../../components/Sidebar/SidebarCandidate";
 import React, { useEffect, useState } from "react";
@@ -207,6 +6,12 @@ import { toast, ToastContainer } from 'react-toastify';
 import axios from "axios";
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from "react-router-dom";
+import { IoMail } from "react-icons/io5";
+import { BsBuildingFill } from "react-icons/bs";
+import { MdLocationOn } from "react-icons/md";
+import { FaRegCalendarAlt,FaPhoneAlt,FaPencilAlt } from "react-icons/fa";
+import Footer from "../../components/Footer/Footer";
+
 const ProfileCandidate = () => {
     const [editMode, setEditMode] = useState(false);
     const [user, setUser] = useState(null);
@@ -228,9 +33,6 @@ const ProfileCandidate = () => {
       useEffect(() => {
         const fetchUserProfile = async () => {
           try {
-            // //console.log("Token récupéré pour la requête :", token);
-            ////console.log("role :", role);
-      
             const response = await axios.get("http://localhost:8000/candidate/profile", {
                 headers: {
                 Authorization: `Bearer ${token}`,
@@ -242,7 +44,7 @@ const ProfileCandidate = () => {
             setUser(response.data.candidate);
             setNewData(response.data.candidate);
             setEditMode(false);
-            localStorage.setItem("profile-picture",response.data.candidate.profilePhoto.url);
+            // localStorage.setItem("profile-picture",response.data.candidate.profilePhoto.url);
             // reset(response.data.user);
           } catch (error) {
             console.error("Error fetching profile:", error.response?.data || error.message);
@@ -383,16 +185,23 @@ const handleCvUpload = async () => {
     console.log("response cv : ",response.data)
     if (response.status === 200) {
       toast.success("CV uploaded successfully!");
-      // mise à jour du state
+       const newCvData = {
+        url: response.data.Cv.url,
+        publicId: response.data.Cv.publicId
+      };
+      
+      // Mettre à jour user
       setUser(prev => ({
         ...prev,
-        cv: {
-          // url: response.data.user.cv.url,
-          // name: response.data.user.cv.name
-          url:response.data.Cv.url,
-          publicId:response.data.Cv.publicId
-        }
+        cv: newCvData
       }));
+      
+      // Mettre à jour AUSSI newData pour que les données soient cohérentes
+      setNewData(prev => ({
+        ...prev,
+        cv: newCvData
+      }));
+
     } else {
       toast.error(response.data.message || "CV upload failed.");
     }
@@ -405,29 +214,85 @@ const handleCvUpload = async () => {
 
 console.log("new data skills: ",newData?.skills)
 return (
+    <>
   <div className="Profile-wrapper-container">
             <ToastContainer /> {/* Ajoute le conteneur des notifications */}
     
     <SidebarCandidate />
     <div className="profile-container">
     {!editMode ? (
-        <>
-        <h2>My Profile</h2>
-          <div className="profile-pic-container">
-            <img src={user?.profilePhoto.url} alt="Profile" className="profile-pic" />
-          </div>
-          <ul className="profile-list">
-            {profileFields?.map((field,index)=>
-            field.value?(
-              <li key={index} className="profile-item">
-                <strong>{field.label}:</strong> {field.value}
-              </li>
-            ):null)
-            
-          }
-          <li className="profile-item">
-  <strong>CV:</strong>  
-  {user?.cv?.url ? (
+        <div className="profile-all-container">
+                <div className="profile-header">
+          <button className="edit-btn" onClick={handleChange}>
+            <FaPencilAlt />
+          </button>
+
+            <img src={user?.profilePhoto.url} alt="Profile" className="profile-picture" />
+            <h1 class="profile-user-name" >{user?.name}</h1>
+        <h2 class="profile-user-role">{user?.role}</h2>
+        <span class="profile-user-status">{user?.status}</span>
+        </div>
+        <div class="profile-body">
+                <div class="info-section">
+                    <h3><i class="fas fa-user-circle"></i> Personal informations</h3>
+<div class="info-item">
+                        <div class="info-icon">
+                            <IoMail />
+                        </div>
+                        <div class="info-content">
+                            <h4>Email</h4>
+                            <p id="profile-email">{user?.email}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <FaPhoneAlt />
+                        </div>
+                        <div class="info-content">
+                            <h4>Phone number</h4>
+                            <p id="profile-phone">{user?.phoneNumber}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-venus-mars"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Gender</h4>
+                            <p id="profile-gender">{user?.gender}</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                                            <div class="info-icon">
+                                                <FaRegCalendarAlt />
+                                            </div>
+                                            <div class="info-content">
+                                                <h4>Birthdate</h4>
+                                                <p id="profile-gender">{user?.birthDate?.split('T')[0]}</p>
+                                            </div>
+                                        </div>
+                  <div class="info-item">
+                                          <div class="info-icon">
+                                              <MdLocationOn />
+                                          </div>
+                                          <div class="info-content">
+                                              <h4>Adress</h4>
+                                              <p id="profile-address">{user?.address}</p>
+                                          </div>
+                                      </div>
+                                  </div>
+                <div class="info-section">
+                    <h3><i class="fas fa-briefcase"></i> Professional informations</h3>
+                <div class="company-section">
+                        <h3><BsBuildingFill /> Skills</h3>
+                        <p id="company-name">{user?.skills}</p>
+                    </div>
+                    <div class="company-section">
+                        <h3><BsBuildingFill /> CV</h3>
+                        <p id="company-name">
+                        {user?.cv?.url ? (
     <>
       <a 
         href={user.cv.downloadUrl || `${user.cv.url}?response-content-disposition=attachment`} 
@@ -436,25 +301,20 @@ return (
         rel="noopener noreferrer"
         style={{ marginRight: "10px" }}
       >
-        Télécharger le CV
-      </a>
-      <a 
-        href={user.cv.url} 
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        (Voir en ligne)
+        my CV
       </a>
     </>
   ) : (
     <span>Aucun CV disponible</span>
   )}
-</li>
-          <div className="btn-edit-wrapper">
-          <button className="btn-edit" onClick={handleChange}>Edit</button>
-          </div>
-          </ul>
-          </>):( 
+    </p>
+ </div>
+  </div>
+    </div>
+
+    </div>
+         
+         ):( 
             <form className="edit-form" onSubmit={handleSubmit(HandleEdit)}>
             <h2>Update my profile</h2>
             <div>
@@ -557,6 +417,9 @@ return (
    
       
   </div>
+        <Footer />
+</>
+
 );
 };
 
