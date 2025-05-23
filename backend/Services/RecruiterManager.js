@@ -19,17 +19,16 @@ class RecruiterManager extends IRecruiter{
             const recruiterProfile = {
                 profilePhoto:user.profilePhoto,
                 // userId: user._id,  
-                // // ID utilisateur
-                name: user.name,    // Nom de l'utilisateur
-                email: user.email,  // Email de l'utilisateur
-                phoneNumber: user.phoneNumber,  // Numéro de téléphone de l'utilisateur
+                name: user.name,    
+                email: user.email,  
+                phoneNumber: user.phoneNumber,  
                 address: user.address,
-                birthDate:user.birthDate,  // Adresse de l'utilisateur
-                gender: user.gender, // Statut du recruteur
-                status: user.status, // Statut du recruteur
+                birthDate:user.birthDate,  
+                gender: user.gender, 
+                status: user.status, 
                 companyLogo:recruiter.companyID.logo,
-                company: recruiter.companyID.name,  // Nom de la société (peuplé via populate)
-                role: user.role  // Rôle du recruteur (par exemple, "recruiter")
+                company: recruiter.companyID.name,  
+                role: user.role  
             };
             return recruiterProfile;
         }

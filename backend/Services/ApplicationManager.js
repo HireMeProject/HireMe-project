@@ -76,12 +76,14 @@ class ApplicationManager extends ApplicationInterface{
         // Récupérer les offres du recruteur
         const jobOffers = await JobOfferManager.GetMyJobOffers(recruiterId,"");
         // Extraire les IDs des offres
-        const jobOfferIds = jobOffers.map(job => job._id.toString());
+        const jobOfferIds = jobOffers.jobOffersWithCategory.map(job => job._id.toString());
+        
         // console.log("jobs :" ,jobOfferIds);
         // Construire le filtre
         const filtre = { jobID: { $in: jobOfferIds } };
         // console.log("query :" ,filtre);
         if (status) filtre.status = { $regex: status, $options: "i" };
+        const total = await Application.find(filtre).countDocuments();
 
         // Récupérer les candidatures des offres d'emploi du recruteur
         const applications = await Application.find(filtre)
@@ -91,7 +93,8 @@ class ApplicationManager extends ApplicationInterface{
         // if (applications.length === 0) {
         //         return "No applications found." 
         // }
-        return applications;
+        return {total,
+            applications};
     
     }
     //Recruiter

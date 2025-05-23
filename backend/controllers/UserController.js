@@ -126,7 +126,29 @@ const updateUserCV=async(req,res)=>{
     }
 }
 /**
- * @desc Update User status
+ * @desc manage User status
+ * @route /users-profile/:id
+ * @method patch
+ * @access private admin
+ */
+const ManageUserStatus=async(req,res)=>{
+    try {
+        const userId=req.params.id;
+        const status=req.body.status;
+        console.log("status received : ",req.body)
+        console.log("userid: ",userId);
+        const updatedUser = await UserManager.UpdateUserStatus(userId, status);
+        return res.status(200).json({ status: "success", message: "Status updated successfully", user: updatedUser });
+    } catch (error) {
+        console.log("error 500 ",error.message)
+        if (error.status) {
+            return res.status(error.status).json({ status: "error", message: error.message });
+        }
+        return res.status(500).json({ status: "error", message: error.message });
+    }
+}
+/**
+ * @desc Update User profile
  * @route /users/:id
  * @method patch
  * @access private admin
@@ -136,7 +158,7 @@ const UpdateUserProfile=async(req,res)=>{
         const userId=req.params.id;
         console.log("userid: ",userId);
         const updatedUser = await UserManager.updateUser(userId, req.body);
-        return res.status(200).json({ status: "success", message: "Status updated successfully", user: updatedUser });
+        return res.status(200).json({ status: "success", message: "Profile updated successfully", user: updatedUser });
     } catch (error) {
         console.log("error 500 ",error.message)
         if (error.status) {
@@ -168,13 +190,14 @@ const UpdateRecruiter=async(req,res)=>{
  */
 const GetAllUsers=async(req,res,next)=>{
     try {
-        const users = await UserManager.getAllUsers();
-        res.status(200).json({ status: "success", users });
+        const users = await UserManager.getAllUsers(req.query);
+        return res.status(200).json({ status: "success", users });
     } catch (error) {
+        console.log("error fetching all users :",error)
         if (error.status) {
             return res.status(error.status).json({ status: "error", message: error.message });
         }
-        res.status(500).json({ status: "error", message: error.message });
+        return res.status(500).json({ status: "error", message: error.message });
     }}
 /**
  * @desc Get users by role
@@ -194,20 +217,57 @@ const GetUsersByrole=async(req,res)=>{
     }
 }
 /**
- * @desc Get users by id
+ * @desc Get users by id 
+ * @route /users/:role/:id
+ * @method get
+ * @access private (only admin)
+ */
+const getAdminProfile=async(req,res,next)=>{
+    try {
+        const id=req.user.id;
+        const user = await UserManager.getAdminProfile(id);
+        return res.status(200).json({ status: "success", user });
+    } catch (error) {
+        if (error.status) {
+            return res.status(error.status).json({ status: "error", message: error.message });
+        }
+        return res.status(500).json({ status: "error", message: error.message });
+    }
+}
+/**
+ * @desc Get users by id 
  * @route /users/:role/:id
  * @method get
  * @access private (only admin)
  */
 const GetUserById=async(req,res,next)=>{
     try {
-        const user = await UserManager.getUserById(req.user.id,req.user.role);
-        res.status(200).json({ status: "success", user });
+        const id=req.params.id;
+        const user = await UserManager.GetUserById(id);
+        return res.status(200).json({ status: "success", user });
     } catch (error) {
         if (error.status) {
             return res.status(error.status).json({ status: "error", message: error.message });
         }
-        res.status(500).json({ status: "error", message: error.message });
+        return res.status(500).json({ status: "error", message: error.message });
+    }
+}
+/**
+ * @desc Get  users profile by id
+ * @route /user-profile/:id
+ * @method get
+ * @access private (only admin)
+ */
+const GetUserProfileById=async(req,res,next)=>{
+    try {
+        const {id}=req.params.id;
+        const user = await UserManager.getUserById(id);
+        return res.status(200).json({ status: "success", user });
+    } catch (error) {
+        if (error.status) {
+            return res.status(error.status).json({ status: "error", message: error.message });
+        }
+        return res.status(500).json({ status: "error", message: error.message });
     }
 }
 /**
@@ -305,10 +365,11 @@ const DeleteUser=async(req,res,next)=>{
 
 
 module.exports={
+    GetUserById,
     UpdateUser,
     GetAllUsers,
     GetUsersByrole,
-    GetUserById,
+    getAdminProfile,
     InsertUser,
     DeleteUser,
     RegisterRecruiter,
@@ -318,4 +379,6 @@ module.exports={
     UpdateUserProfile,
     profilePhotoUploadCtrl,
     updateUserCV,
+    ManageUserStatus,
+    GetUserProfileById,
 }

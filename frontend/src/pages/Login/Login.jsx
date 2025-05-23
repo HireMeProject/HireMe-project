@@ -125,17 +125,30 @@ const onSubmit = async (data,event) => {
                 console.log("role de login : ",response.data.user.role);
 
                 // localStorage.setItem("id",result.id) ;
-
+if(response.data.user.status==="active"){
                 toast.success("Login successful! Redirecting to your account...", {
                       position: "top-right",
                       autoClose: 3000, 
                     });
+                    
+
+                    
                     if(role==="candidate"){
                       navigate("/Dashboard-candidate"); 
                     }
-                    else{
+                    else if (role==='recruiter'){
                       navigate("/Dashboard"); 
                     }
+                    else if(role==="admin"){
+                      navigate("/Dashboard-admin"); 
+                    }
+                    }
+                    else{
+                      toast.error(response.data.message || "Your account is inactive for the moment.", {
+                      position: "top-right",
+                    });
+                    }
+
             } 
             else {
                 toast.error(response.data.message || "Identifiants incorrects.", {

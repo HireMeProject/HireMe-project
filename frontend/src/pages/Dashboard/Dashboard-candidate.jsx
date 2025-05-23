@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {  BarChart, 
     Bar, 
@@ -12,16 +13,13 @@ import {  BarChart,
     import "./Dashboard.css";
 import DashboardHeader from '../../components/Dashboard/DashboardHeader';
 import Footer from '../../components/Footer/Footer';
-import { FiBriefcase, FiUsers, FiDollarSign, FiBell, FiSearch, FiBookmark } from 'react-icons/fi';
-import SidebarCandidate from '../../components/Sidebar/SidebarCandidate'
+import { FiBriefcase, FiUsers, FiDollarSign, FiBell, FiSearch, FiBookmark ,FiMapPin } from 'react-icons/fi';
+import SidebarCandidate from '../../components/Sidebar/SidebarCandidate';
+import { JobContext } from '../../components/Auth/Context/JobContext';
 
 
 const DashboardCandidate = () => {
-  const timelineData = [
-  { month: 'Jan', applied: 3, interviews: 1 },
-  { month: 'Feb', applied: 5, interviews: 2 },
-  { month: 'Mar', applied: 7, interviews: 3 },
-];
+const navigate=useNavigate();
    const [apps, setApps] = useState([]);
     const token=localStorage.getItem("token");
     // const profilePic=localStorage.getItem("profilePic");
@@ -33,6 +31,7 @@ const DashboardCandidate = () => {
       refused: 0
     });
       const [searchTerm, setSearchTerm] = useState('');
+      const {jobs,loading,fetchJobs}=useContext(JobContext);
     useEffect(()=>{
   const fetchApps = async () => {  
         try {
@@ -56,6 +55,8 @@ const DashboardCandidate = () => {
       };
       
       fetchApps();
+          fetchJobs();
+
       
 },[token])
 useEffect(()=>{
@@ -82,34 +83,13 @@ useEffect(()=>{
     { name: 'accepted', value: apps?.filter(app => app.status === 'accepted').length },
     { name: 'rejected', value: apps?.filter(app => app.status === 'rejected').length },
   ];
-  const [recommendedJobs, setRecommendedJobs] = useState([
-  {
-    id: 1,
-    title: "Développeur Frontend",
-    company: "TechCorp",
-    location: "Paris (Remote)",
-    salary: "50-60K",
-    skills: ["React", "TypeScript", "CSS"]
-  },
-  {
-    id: 2,
-    title: "UX Designer",
-    company: "DesignHub",
-    location: "Lyon",
-    salary: "45-55K", 
-    skills: ["Figma", "User Research", "Prototyping"]
-  },
-  {
-    id: 3,
-    title: "Data Analyst",
-    company: "DataSystems",
-    location: "Full Remote", 
-    salary: "55-65K",
-    skills: ["Python", "SQL", "Tableau"]
+  const [job, setJob] = useState({});
+  useEffect(() => {
+  if (jobs && jobs.length > 0) {
+    setJob(jobs[0]);
   }
-]);
-
-// Fonction pour récupérer les offres recommandées
+}, [jobs]);
+    // console.log(" job : ",job);
 
   return (
 <>
@@ -189,32 +169,28 @@ useEffect(()=>{
 
              <div className="chart-container">
   <h3>Opportunités recommandées</h3>
-  <div className="opportunities-grid">
-    {recommendedJobs.slice(0, 3).map((job) => (
-      <div key={job.id} className="opportunity-card">
+<div className="opportunities-grid">
+      <div  className="opportunity-card">
         <div className="job-header">
-          <h4>{job.title}</h4>
-          <span className="company">{job.company}</span>
+          <h4>{job?.title}</h4>
+          <span className="company">{job?.company}</span>
         </div>
         <div className="job-details">
-          <span><FiMapPin /> {job.location}</span>
-          <span><FiDollarSign /> {job.salary}</span>
+          <span><FiMapPin /> {job?.location}</span>
+          <span><FiDollarSign /> {job?.salary}</span>
         </div>
         <div className="job-skills">
-          {job.skills.map(skill => (
-            <span key={skill} className="skill-tag">{skill}</span>
-          ))}
+          {job?.contractType}
         </div>
         <button className="apply-button">
-          Voir l'offre 
+          Check the job offer
           {/* <FiArrowRight /> */}
         </button>
       </div>
-    ))}
   </div>
   <div className="see-all-container">
-    <button className="see-all-button">
-      Voir toutes les offres <FiBriefcase />
+    <button className="see-all-button" onClick={()=>navigate("/all-jobs")}>
+      Check all of our job offers <FiBriefcase />
     </button>
   </div>
 </div>
@@ -237,6 +213,7 @@ useEffect(()=>{
                   {apps.slice(0, 5).map((app,index) => (
                     <tr key={index}>
                       <td>{app?.jobTitle}</td>
+                      <td>{app?.company?.name}</td>
                       <td>{app?.createdAt.split("T")[0]}</td>
                       <td>{app?.updatedAt.split("T")[0]}</td>
                       <td><span className={`status-badge ${app.status}`}>{app.status}</span></td>

@@ -129,11 +129,10 @@ const GetMyCompany=async(req,res)=>{
  * @method get
  * @access public
  */
-const GetCompanyById=async(req,res)=>{
+const GetCompanyByRecruiterId=async(req,res)=>{
   try{
     const {id}=req.params;
-    const company=await Company.findById(id);
-    const recruiterEmail=await Company.findOne({companyID:id});
+    const company=await Recruiter.findById(id).populate("companyID");
     const companyProfile={
       ...company.toObject()
     }
@@ -361,5 +360,5 @@ module.exports = {
   EditCompany,
   employeeProfilePhotoUploadCtrl,
   addEmployee,
-  GetCompanyById,
+  GetCompanyByRecruiterId,
 };

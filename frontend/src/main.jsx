@@ -7,6 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import {loadStripe} from "@stripe/stripe-js"  ;
 import {Elements} from "@stripe/react-stripe-js";
+import { JobContext, JobProvider } from './components/Auth/Context/JobContext.jsx';
 
 //configure stripe
 const stripePromise = loadStripe('pk_test_51QRD5k09acFWKvV3ooNsoTBVpQd2yN39XGMimC6YyjQAf51JMQzl8OHDNYNjVcRqnK8TJt9hQk5h2rIUC25uixTA00CCjphbwn');
@@ -20,10 +21,10 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Context>
     <BrowserRouter>
-    {/* <CheckoutProvider stripe={stripePromise} options={{fetchClientSecret}}>
-      <CheckoutForm />
-    </CheckoutProvider> */}
+    <JobProvider>
       <App />
+    </JobProvider>
+      
     </BrowserRouter>
   </Context>
 

@@ -193,6 +193,20 @@ class UserManager extends IUser{
     );
     return { token, user };
   }
+    //Gerer User profile status
+  async UpdateUserStatus(userId,status){
+    const user=await User.findByIdAndUpdate(userId,
+      {$set:{
+        status,
+      }},
+      { new: true }
+    );
+    if(!user){
+        throw { status: 404, message: "User not found" };
+    }
+    return user;
+
+  }
   //Mettre à jour un utilisateur
   async updateUser(userId, updateData) {
     try {
@@ -242,7 +256,7 @@ class UserManager extends IUser{
       }
       const user = await User.findById(userId);
       if (!user) {
-        throw { status: 400, message: "User not found" };
+        throw { status: 404, message: "User not found" };
       }
       console.log("user founded :", user.name);
       // Update the base user information
@@ -345,10 +359,27 @@ class UserManager extends IUser{
   }
 
   //Recuperer tous les utilisateurs
+  async getAllUsers(query) {
+    console.log(query)
+     const { page, limit, status } = query;
+        const pageQ = parseInt(page) || 1; // Page actuelle
+        const limitQ = parseInt(limit) || 5;
+        const skip = (pageQ - 1) * limitQ;
+        const total = await User.countDocuments();
+        
+        let filtre={};
+        if (status) filtre.status = { $regex: status, $options: "i" };
+    const users = await User.find(filtre).select("-password").skip(skip).limit(limitQ);
+    return {total,users};
+      // total,
+      
+  } 
+   /**
   async getAllUsers() {
+    
     const users = await User.find().select("-password");
     return users;
-  }
+  }*/
   //Recuperer tous les utilisateurs par role
   async getUsersByRole(role) {
     const users = await User.find({ role }).select("-password");
@@ -363,34 +394,70 @@ class UserManager extends IUser{
     return user;
   }
   // Récupérer un utilisateur par ID 
-  async getUserById(userId,role) {
-    let profile ,userData,data;
+  async getAdminProfile(userId) {
+    let profile;
     let user=await User.findOne({ _id: userId });
-    if(role==="candidate"){
-      userData=await Candidate.findById(userId);
-      data=[userData.cv,userData.skills]
-    }
-    else if(role==="recruiter"){
-      userData=await Recruiter.findById(userId).populate("companyID","name sector logo").lean();
-      data={name:userData.companyID.name,sector:userData.companyID.sector,logo:userData.companyID.logo}
-
-    }
+   
     if (!user) {
       throw { status: 404, message: "User not found" };
     }
     profile={
       profilePhoto:user.profilePhoto,
-      userId: user._id,  // ID utilisateur
+      // userId: user._id,  // ID utilisateur
       name: user.name,    // Nom de l'utilisateur
       email: user.email,  // Email de l'utilisateur
       phoneNumber: user.phoneNumber,  // Numéro de téléphone de l'utilisateur
       address: user.address,  // Adresse de l'utilisateur
       status: user.status, // Statut du recruteur
-      data:data, // Nom de la société (peuplé via populate)
+      // data:data, // Nom de la société (peuplé via populate)
+      birthDate:user.birthDate,
       role: user.role,
       gender:user.gender,
     }
     console.log("data : ",profile);
+    return profile;
+  }
+  async GetUserById(id){
+    const user=await User.findById(id);
+    if(!user){
+      throw { status: 404, message: "User not found" };
+    }
+    let userprofile,profile;
+    if(user.role==="candidate"){
+      userprofile=await Candidate.findById(id).populate("candidateId");
+       profile={
+        profilePhoto:user.profilePhoto,
+                // userId: user._id,  
+                name: user.name,    
+                email: user.email,  
+                phoneNumber: user.phoneNumber,  
+                address: user.address,
+                birthDate:user.birthDate,  
+                gender: user.gender, 
+                status: user.status, 
+                cv:userprofile.cv,
+                skills: userprofile.skills,
+                role: user.role  
+                 }
+    }
+    else if(user.role==="recruiter"){
+      userprofile=await Recruiter.findById(id).populate("recruiterID").populate("companyID");
+      profile={
+                profilePhoto:user.profilePhoto,
+                // userId: user._id,  
+                name: user.name,    
+                email: user.email,  
+                phoneNumber: user.phoneNumber,  
+                address: user.address,
+                birthDate:user.birthDate,  
+                gender: user.gender, 
+                status: user.status, 
+                companyLogo:userprofile.companyID.logo,
+                company: userprofile.companyID.name,  
+                role: user.role  
+            };
+    }
+    
     return profile;
   }
 

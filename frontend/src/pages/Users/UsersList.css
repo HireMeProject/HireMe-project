@@ -1,0 +1,97 @@
+.users-wrapper{
+    margin: 0 ;
+    width: 100%;
+    display: flex;
+    min-height: 100vh;
+    font-family: sans-serif;
+}
+.my-users-header {
+        width: auto;        
+    margin: 20px 40px;
+    background-color: #fff;
+    padding:0 20px;
+    margin: 2rem auto;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);}
+
+.my-users-title-container {
+    margin-top: 25px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    border-bottom:1px solid rgb(162, 162, 162);
+    padding-bottom:1rem ;
+}
+.my-users-list-title{
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.my-users-container {
+    flex: 1;
+    padding: 20px;
+}
+
+.my-users-filter-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    margin-bottom: 20px;
+}
+
+.filter-status {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: white;
+    cursor: pointer;
+}
+
+.my-users-list-container {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.my-users-fields-container {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    font-weight: bold;
+    background: linear-gradient(135deg, #1e293b, #0056b3);
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.my-user {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.my-user:last-child {
+    border-bottom: none;
+}
+
+.user-title,
+.user-name,
+.user-email,
+.user-date,
+.user-status {
+    padding: 5px;
+}
+.app-title-style{
+    color: #26A4FF;
+    font-weight: bold;
+}
+
+.user-status select {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+

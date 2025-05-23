@@ -19,6 +19,11 @@ import JobProfile from './components/Jobs/JobProfile';
 import DashboardCandidate from './pages/Dashboard/Dashboard-candidate';
 import ProfileCandidate from './pages/Profile/ProfileCandidate';
 import MyAppsCand from './pages/Applications/MyAppsCand';
+import DashboardAdmin from './pages/Dashboard/DashboardAdmin';
+import ProfileAdmin from './pages/Profile/ProfileAdmin';
+import UsersList from './pages/Users/UsersList';
+import CompanyProfile from './pages/Company/CompanyProfile';
+import UserProfile from './pages/Users/UserProfile';
 function App() {
 
   return (
@@ -28,6 +33,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Home />} />
         <Route path="/all-jobs" element={<Alljobs />} />
+        {/* Recruiter  */}
         <Route path="/Dashboard" element={<Dashboard/>} />
         <Route path="/profile" element={<Profile/>} />  
         <Route path="/my-jobs" element={<MyJobs/>} />  
@@ -38,12 +44,17 @@ function App() {
         <Route path="/Payments" element={<Payment />} />
         <Route path="/myCompany" element={<Company />} />
         <Route path="all-jobs/:id" element={<JobProfile/>} />
-
+        {/* Candidate */}
         <Route path='/Dashboard-candidate' element={<DashboardCandidate />} />
         <Route path='/profile-candidate' element={<ProfileCandidate />} />
         <Route path='/my-applications-candidate' element={<MyAppsCand />} />
+        {/* Admin */}
+        <Route path='/Dashboard-admin' element={<DashboardAdmin />} />
+        <Route path="/profile-admin" element={<ProfileAdmin/>} />  
+        <Route path="/users" element={<UsersList />} />
+        <Route path="/company-profile" element={<CompanyProfile />} />
+        <Route path="/user-profile" element={<UserProfile />} />
 
-        {/* <Route path='/success-payment'/> */}
       </Routes>
      
     </>

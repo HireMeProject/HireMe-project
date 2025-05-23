@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
 import SidebarRecruiter from "../Sidebar/SidebarRecruiter";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
+import {JobContext } from "../Auth/Context/JobContext";
+
 
 const Jobs = ({
   filtreCategory,
@@ -11,44 +13,56 @@ const Jobs = ({
   filtrePriceRange,
   filtreStatus,
 }) => {
-  const [jobs, setJobs] = useState([]);
   const token=localStorage.getItem("token");
   const [jobId,setJobId]=useState("");
   const navigate=useNavigate();
-  const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(5);
-  const [totalPages, setTotalPages] = useState(1);
+   const {
+    jobs,
+    loading,
+    fetchJobs,
+    page,
+    setPage,
+    totalPages,
+  } = useContext(JobContext);
   useEffect(() => {
-    const fetchJobsquery = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8000/joboffers`, {
-          params: {
-            category: filtreCategory, // ex: ['IT', 'Design']
-            status: filtreStatus, // ex: ['open']
-            contractType: filtreEmploymentType, // ex: ['Remote', 'Full-time']
-            minsalary: filtrePriceRange[0],
-            maxsalary: filtrePriceRange[1],
-            page:page, limit:limit,
-          },
-        });
-        console.log("jobs response:", response.data);
-        setJobs(response.data.jobOffers.jobOffers);
-        setTotalPages(Math.ceil(response.data.jobOffers.total / limit));
-      } catch (error) {
-        console.error("Error fetching jobs:", error);
-        toast.error("Failed to load companies. Please try again.");
-      }
-    };
-    if (
-      filtreCategory ||
-      filtreEmploymentType ||
-      filtrePriceRange ||
-      filtreStatus
-    ) {
-      console.log("query : ", filtreCategory);
-      fetchJobsquery();
-    }
-  }, [filtreCategory, filtreEmploymentType, filtrePriceRange, filtreStatus,page,limit]);
+    // const fetchJobsquery = async () => {
+    //   try {
+    //     const response = await axios.get(`http://localhost:8000/joboffers`, {
+    //       params: {
+    //         category: filtreCategory, // ex: ['IT', 'Design']
+    //         status: filtreStatus, // ex: ['open']
+    //         contractType: filtreEmploymentType, // ex: ['Remote', 'Full-time']
+    //         minsalary: filtrePriceRange[0],
+    //         maxsalary: filtrePriceRange[1],
+    //         page:page, limit:limit,
+    //       },
+    //     });
+    //     console.log("jobs response:", response.data);
+    //     setJobs(response.data.jobOffers.jobOffers);
+    //     setTotalPages(Math.ceil(response.data.jobOffers.total / limit));
+    //   } catch (error) {
+    //     console.error("Error fetching jobs:", error);
+    //     toast.error("Failed to load companies. Please try again.");
+    //   }
+    // };
+    // if (
+    //   filtreCategory ||
+    //   filtreEmploymentType ||
+    //   filtrePriceRange ||
+    //   filtreStatus
+    // ) {
+    //   console.log("query : ", filtreCategory);
+    //   fetchJobsquery();
+    // }
+    fetchJobs({
+      filtreCategory,
+      filtreEmploymentType,
+      filtrePriceRange,
+      filtreStatus,
+    });
+  }, [filtreCategory, filtreEmploymentType, filtrePriceRange, filtreStatus, page]);
+  // }, [filtreCategory, filtreEmploymentType, filtrePriceRange, filtreStatus,page,limit]);
   const VerifyLoggedIn=(job_Id)=>{
     try{
         if(token){

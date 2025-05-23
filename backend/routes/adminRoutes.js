@@ -4,6 +4,7 @@ const {
   addCompany,
   DeleteCompany,
   GetAllCompanies,
+  GetCompanyByRecruiterId,
 } = require("../controllers/CompanyController");
 const {
   verifyAdmin,
@@ -13,10 +14,12 @@ const {
 } = require("../middlewares/Authmiddleware");
 const {
   UpdateUserProfile,
-  GetUserById,
+  getAdminProfile,
   GetAllUsers,
   GetUsersByrole,
   DeleteUser,
+  ManageUserStatus,
+  GetUserProfileById,
 } = require("../controllers/UserController");
 const userManager = require("../Services/UserManager");
 const {GetAllJobOffers}=require("../controllers/JobOfferController");
@@ -27,12 +30,16 @@ const {createSubscription,
 router.route("/admin/companies").get(verifyAdmin, GetAllCompanies);
 router.route("/admin/companies").post(verifyAdmin, addCompany);
 router.route("/admin/companies/:id").delete(verifyAdmin, DeleteCompany);
+router.route("/company-profile/:id").get(verifyAdmin, GetCompanyByRecruiterId);
+
 // router.route("/update-user-status/:id").patch(verifyAdmin, UpdateUserProfile);
 
 router.route("/users").get(verifyAdmin, verifyAdmin, GetAllUsers);
 router.route("/users/:role").get(verifyAdmin,GetUsersByrole);
-router.route("/users-profile/:id").get(verifyAdmin, GetUserById);
-router.route("/users/:id").post(verifyAdmin, DeleteUser);
+router.route("/profile-admin").get(verifyAdmin, getAdminProfile);
+router.route("/user-profile/:id").get(verifyAdmin, GetUserProfileById);
+router.route("/user-status/:id").patch(verifyAdmin, ManageUserStatus);
+router.route("/users/:id").delete(verifyAdmin, DeleteUser);
 router.route("/job-offers").post(verifyAdmin,GetAllJobOffers);
 //Subscriptions
 router.route("/subscriptions").get(VerifyToken, getAllActiveSubscriptions);

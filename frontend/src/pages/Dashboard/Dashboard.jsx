@@ -43,8 +43,8 @@ useEffect(()=>{
   
             }
           );  
-          // console.log("jobs response:", response.data.message);
-          setJobs(response.data.message);
+          console.log("jobs response:", response.data.message);
+          setJobs(response.data.message.jobOffersWithCategory);
         } catch (error) {
           console.error("Error fetching jobs:", error);
           toast.error("Failed to load companies. Please try again.");
@@ -62,7 +62,7 @@ useEffect(()=>{
             }
           );
           console.log("applications response:", response.data.applications);
-          setApplications(response.data.applications);
+          setApplications(response.data.applications.applications);
         } catch (error) {
           console.error("Error fetching applications:", error);
           toast.error("Failed to load companies. Please try again.");
@@ -91,7 +91,7 @@ useEffect(()=>{
   }
   fetchData();
 },[jobs,applications])
-
+console.log("jobs : ",jobs)
   
   const applicationStats = [
     { name: 'pending', value: applications?.filter(app => app.status === 'pending').length },

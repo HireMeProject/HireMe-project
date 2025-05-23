@@ -15,7 +15,8 @@ const {verifyAdmin,
     VerifyToken,
     verifyCandidate,
     verifyRecruiter,
-    authenticateSocket}=require("../middlewares/Authmiddleware");
+    authenticateSocket,
+verifyAcountStatus}=require("../middlewares/Authmiddleware");
 const {
     PostJobOffer,
     UpdateJobOffer,
@@ -44,7 +45,7 @@ router.route("/logout").post(logout);
 router.route("/update-profile").patch(VerifyToken,UpdateUser);
 router.route("/users").get(verifyAdmin,verifyAdmin,GetAllUsers);
 router.route("/users/:role").get(GetUsersByrole);
-router.route("/users-profile").get(verifyAdmin,GetUserById);
+router.route("/users-profile/:id").get(verifyAdmin,GetUserById);
 // router.route("/myprofile").get(VerifyToken,GetUserById);
 router.route("/users/:id").post(verifyAdmin,DeleteUser);
 router.route("/profile/profile-photo-upload")

@@ -35,12 +35,12 @@ const MyApplications = () => {
           }
         );
         console.log("applications response:", response.data.applications);
-        setApplications(response.data.applications);
-        setTotalPages(Math.ceil(response.data.applications.length / limit));
+        setApplications(response.data.applications.applications);
+        setTotalPages(Math.ceil(response.data.applications.total / limit));
 
         // Initialiser l'état des statuts
         const initialStatuses = {};
-        response.data.applications.forEach((app) => {
+        response.data.applications.applications.forEach((app) => {
           initialStatuses[app._id] = app.status;
         });
         setStatuses(initialStatuses);

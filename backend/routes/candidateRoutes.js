@@ -8,7 +8,7 @@ const {GetProfile,CvUploadCtrl}=require("../controllers/CandidateController");
 const CvUpload = require("../middlewares/FileUpload");
 const {GetMyApplications,CreateApplication}=require("../controllers/ApplicationController");
 const {UpdateUser,updateUserCV}=require("../controllers/UserController");
-const {GetCompanyById}=require("../controllers/CompanyController");
+// const {GetCompanyById}=require("../controllers/CompanyController");
 
 router.route("/joboffers").get(GetAllJobOffers);
 router.route("/joboffers/:id").get(GetJobOfferpById);
@@ -24,7 +24,7 @@ router.route("/upload-Cv")
 // router.route("/profile/cv-upload")
 //   .post(CvUpload.single("file"), addCv)
 // router.route("/profile/cv-upload").get(CvUploadCtrl);
-router.route("/company/:id").get(GetCompanyById);
+// router.route("/company/:id").get(GetCompanyById);
 
 
 

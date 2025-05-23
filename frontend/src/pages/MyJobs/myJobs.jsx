@@ -62,8 +62,8 @@ const MyJobs = () => {
             page:page, limit:limit,
           }
         });
-        //console.log("jobs response:", response.data.message);
-        setJobs(response.data.message);
+        console.log("jobs response:", response.data.message.jobs);
+        setJobs(response.data.message.jobs.jobOffersWithCategory);
 
       } catch (error) {
         console.error("Error fetching jobs:", error);
@@ -90,9 +90,9 @@ const MyJobs = () => {
         console.log("category dans fetch jobs query:", filtreCategory);
 
         console.log("jobs response:", response.data.message);
-        setJobs(response.data.message);
-        console.log("math ceil totalpages : ",response.data.message.length)
-        setTotalPages(Math.ceil(response.data.message.length / limit));
+        setJobs(response.data.message.jobOffersWithCategory);
+        console.log("math ceil totalpages : ",response.data.message.total)
+        setTotalPages(Math.ceil(response.data.message.total / limit));
 
       } catch (error) {
         console.error("Error fetching jobs:", error);
@@ -106,6 +106,7 @@ const MyJobs = () => {
 
 
   }, [filtreCategory, filtreStatus,page,limit]);
+        console.log("jobs :", jobs);
 
   const HandleChangeCategory = (e) => {
     e.preventDefault();

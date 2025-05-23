@@ -170,6 +170,7 @@ class JobOfferManager  extends IJobOffer{
         const page = parseInt(queryData.page) || 1; // Page actuelle
         const limit = parseInt(queryData.limit) || 5;
         const skip = (page - 1) * limit;
+        
         if(category){
             category_id=await Category.findOne({name:category});
             query.categoryId=category_id;
@@ -182,6 +183,8 @@ class JobOfferManager  extends IJobOffer{
         if (status) query.status = { $regex: status, $options: 'i' };
         query.recruiterId = recruiterId; // Filtrer par recruteur
         // Récupérer les offres d'emploi en fonction de la requête
+        const total = await JobOffer.find(query).countDocuments();
+
         const jobOffers = await JobOffer.find(query).skip(skip).limit(limit);
         // Récupérer et ajouter la catégorie à chaque offre d'emploi
         const jobOffersWithCategory = [];
@@ -203,7 +206,7 @@ class JobOfferManager  extends IJobOffer{
             jobOffersWithCategory.push(jobOfferWithCategory);
         }
     
-        return jobOffersWithCategory;
+        return {total,jobOffersWithCategory};
     }
     
     //Update Job offer 
