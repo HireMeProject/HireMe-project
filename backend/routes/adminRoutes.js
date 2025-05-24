@@ -22,7 +22,7 @@ const {
   GetUserProfileById,
 } = require("../controllers/UserController");
 const userManager = require("../Services/UserManager");
-const {GetAllJobOffers}=require("../controllers/JobOfferController");
+const {GetAllJobOffers,DeleteJobOffer}=require("../controllers/JobOfferController");
 const {createSubscription,
   updateSubscription,
   getAllActiveSubscriptions,}=require("../controllers/SubscriptionController");
@@ -31,6 +31,7 @@ router.route("/admin/companies").get(verifyAdmin, GetAllCompanies);
 router.route("/admin/companies").post(verifyAdmin, addCompany);
 router.route("/admin/companies/:id").delete(verifyAdmin, DeleteCompany);
 router.route("/company-profile/:id").get(verifyAdmin, GetCompanyByRecruiterId);
+router.route("/users-joboffers/:id").delete(verifyAdmin,DeleteJobOffer);
 
 // router.route("/update-user-status/:id").patch(verifyAdmin, UpdateUserProfile);
 

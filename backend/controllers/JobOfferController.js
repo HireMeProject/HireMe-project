@@ -186,6 +186,7 @@ const DeleteJobOffer = async (req, res, next) => {
     const jobOfferToDelete = await JobOffer.findById(jobOfferId).session(
       session
     );
+    console.log("job offer to delete : ",jobOfferToDelete)
     if (!jobOfferToDelete) {
       await session.abortTransaction();
       session.endSession();
@@ -196,7 +197,7 @@ const DeleteJobOffer = async (req, res, next) => {
     //verifier s il y a des candidatures ayant statuts acceptés
     const Applications = await Application.find({
       jobID: jobOfferId,
-      status: { $in: ["Approved", "pending"] },
+      status: { $in: ["approved", "pending"] },
     }).session(session);
     if (Applications.length > 0) {
       await Application.updateMany(

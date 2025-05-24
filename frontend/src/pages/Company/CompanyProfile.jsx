@@ -118,26 +118,7 @@ const CompanyProfile = () => {
                     <p className="employee-position">{emp.position}</p>
                     <p className="employee-email">{emp.email}</p>
                     
-                    <div className="upload-section">
-                      <input 
-                        type="file" 
-                        id={`employee-photo-${index}`}
-                        onChange={(e) => setFile(e.target.files[0])} 
-                        className="visually-hidden"
-                      />
-                      <label 
-                        htmlFor={`employee-photo-${index}`} 
-                        className="upload-label"
-                      >
-                        Change Photo
-                      </label>
-                      <button 
-                        onClick={() => handleEmpPhotoUpload(index)}
-                        className="upload-member-button"
-                      >
-                        Upload
-                      </button>
-                    </div>
+                    
                   </div>
                 </div>
               ))}

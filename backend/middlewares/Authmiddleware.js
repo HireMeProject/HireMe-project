@@ -93,22 +93,25 @@ const verifyAcountStatus = async (req, res, next) => {
 const verifySubscriptionRecruiter=async(req,res,next)=>{
     try{
         const userId=req.user.id;
-        const paymentDone=await Payment.findOne({client:userId});
-        if(paymentDone.status==="Failed"){
+        const paymentDone=await Payment.find({client:userId}).sort({ paymentDate: -1 });; //c est une liste 
+console.log("payment done : ",paymentDone[0])
+        if(paymentDone[0].status==="Failed"){
             return res.status(401).json({message:"you need to pay first."})
         }
-        else if(paymentDone.status==="Succeeded"){
+        else if(paymentDone[0].status==="Succeeded"){
             const today = new Date();
-            const paymentValid = new Date(paymentDone.paymentDate) > today;
+            const paymentValid = new Date(paymentDone[0].expiryDate ) > today;
             if (!paymentValid) {
             return res.status(401).json({ message: "Your subscription has expired. Please renew." });
         }
+                    console.log("paiement valide")
+
             next();
         }
-        else if(paymentDone.status==="Pending"){
+        else if(paymentDone[0].status==="Pending"){
             return res.status(400).json({message:"payment status is still pending..."})
         }
-        else  if (paymentDone.status === "Failed") {
+        else  if (paymentDone[0].status === "Failed") {
       return res.status(401).json({ message: "payment failed ,  Please retry" });
     }
     }

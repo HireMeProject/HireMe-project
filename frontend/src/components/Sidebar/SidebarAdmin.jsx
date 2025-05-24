@@ -60,13 +60,10 @@ const SidebarAdmin = () => {
                             <Link to="/users" className={`sidebar-link-dashboard ${location.pathname==="/users" ?"active-dashboard":""}`} >
                             <i class="icons-sidebar bi bi-book-half"></i>Users
                             </Link>
-                            <Link to="/companies" className={`sidebar-link-dashboard ${location.pathname==="/companies" ?"active-dashboard":""}`} >
-                            <i class="icons-sidebar bi bi-book-half"></i>Companies
-                            </Link>
                             <Link to="/my-subscriptions" className={`sidebar-link-dashboard ${location.pathname==="/my-subscriptions" ?"active-dashboard":""}`} >
                             <i class="icons-sidebar bi bi-book-half"></i>Subscriptions
                             </Link>
-                            <Link to="/users-jobs" className={`sidebar-link-dashboard ${location.pathname==="/jobs" ?"active-dashboard":""}`} >
+                            <Link to="/users-jobs" className={`sidebar-link-dashboard ${location.pathname==="/users-jobs" ?"active-dashboard":""}`} >
                             <i class="icons-sidebar bi bi-book-half"></i>All jobs
                             </Link>
                             

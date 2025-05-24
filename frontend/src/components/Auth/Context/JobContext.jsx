@@ -45,6 +45,7 @@ export const JobProvider = ({ children }) => {
         page,
         setPage,
         totalPages,
+        setJobs,
       }}>
       {children}
     </JobContext.Provider>

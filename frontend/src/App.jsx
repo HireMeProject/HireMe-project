@@ -24,6 +24,8 @@ import ProfileAdmin from './pages/Profile/ProfileAdmin';
 import UsersList from './pages/Users/UsersList';
 import CompanyProfile from './pages/Company/CompanyProfile';
 import UserProfile from './pages/Users/UserProfile';
+import MySubscriptions from './pages/Subscriptions/MySubscriptions';
+import Adminjobs from './pages/Jobs/Adminjobs';
 function App() {
 
   return (
@@ -54,6 +56,8 @@ function App() {
         <Route path="/users" element={<UsersList />} />
         <Route path="/company-profile" element={<CompanyProfile />} />
         <Route path="/user-profile" element={<UserProfile />} />
+        <Route path='/my-subscriptions' element={<MySubscriptions />} />
+        <Route path='/users-jobs' element={<Adminjobs />} />
 
       </Routes>
      
