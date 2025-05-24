@@ -63,7 +63,10 @@ const getAllActiveSubscriptions = async (req, res) => {
 const updateSubscription = async (req, res) => {
     try {
     const subscriptionId=req.params.id;
-      const Subscriptions = await SubscriptionManager.getAllActiveSubscriptions(subscriptionId,req.body);
+    console.log("req params subs id : ",subscriptionId)
+      const Subscriptions = await SubscriptionManager.updateSubscription(subscriptionId,req.body);
+          console.log("Subscriptions : ",Subscriptions)
+
       return res.status(200).json({ status: "success", Subscriptions });
     } catch (error) {
       console.log(error);

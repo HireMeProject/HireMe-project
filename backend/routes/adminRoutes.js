@@ -45,7 +45,7 @@ router.route("/job-offers").post(verifyAdmin,GetAllJobOffers);
 //Subscriptions
 router.route("/subscriptions").get(VerifyToken, getAllActiveSubscriptions);
 router.route("/subscriptions").post(verifyAdmin, createSubscription);
-router.route("/subscriptions").patch(verifyAdmin, updateSubscription);
+router.route("/subscriptions/:id").patch(verifyAdmin, updateSubscription);
 
 
 

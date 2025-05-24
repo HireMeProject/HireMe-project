@@ -8,7 +8,7 @@ class SubscriptionManager extends ISubscription{
   }
 
    async getAllActiveSubscriptions() {
-    return await Subscription.find({ status: "active" });
+    return await Subscription.find();
   }
 
    async updateSubscription(id, updateData) {

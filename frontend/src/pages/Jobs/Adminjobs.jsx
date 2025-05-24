@@ -2,6 +2,7 @@ import React, { useState, useEffect,useContext } from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
+import "./AdminJobs.css";
 import Footer from "../../components/Footer/Footer";
 import { JobContext } from "../../components/Auth/Context/JobContext";
 import SidebarAdmin from "../../components/Sidebar/SidebarAdmin";
@@ -93,32 +94,18 @@ const Adminjobs = () => {
 
   return (
     <>
-    <div className="my-job-list-wrapper">
+    <div className="users-job-list-wrapper">
       <ToastContainer />
       <SidebarAdmin />
-      <div className="my-job-list-container">
-      {/* Delete Confirmation Modal */}
-              {showDeleteModal && (
-                <div className="modal-overlay">
-                  <div className="modal">
-                    <h3>Are you sure you want to delete this job?</h3>
-                    <div className="modal-buttons">
-                      <button onClick={HandleDeleteJob}>Yes, Delete</button>
-                      <button onClick={() => setShowDeleteModal(false)}>
-                        Cancel
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )}
+      <div className="users-job-list-container">
 <>
-            <div className="my-jobs-header">
-              <div className="my-jobs-title-container">My Jobs</div>
+            <div className="users-jobs-header">
+              <div className="users-jobs-title-container">My Jobs</div>
               <div className="post-job-btn-container">
 
               </div>
             </div>
-            <div className="my-jobs-container">
+            <div className="users-jobs-container">
               <div className="my-jobs-filter-container">
                 <div className="my-jobs-list-title">My Jobs List</div>
                 <div className="filter-job-container">
@@ -147,17 +134,19 @@ const Adminjobs = () => {
                   </div>
                 </div>
               </div>
-              <div className="my-jobs-list-container">
-                <div className="my-jobs-fields-container">
-                  <div className="my-jobs-fiels">name</div>
-                  <div className="my-jobs-fiels">status</div>
-                  <div className="my-jobs-fiels">category</div>
-                  <div className="my-jobs-fiels">date posted</div>
-                  <div className="my-jobs-fiels">job type</div>
+              <div className="users-jobs-list-container">
+                <div className="users-jobs-fields-container">
+                  <div className="users-jobs-fiels">Company</div>
+                  <div className="users-jobs-fiels">name</div>
+                  <div className="users-jobs-fiels">status</div>
+                  <div className="users-jobs-fiels">category</div>
+                  <div className="users-jobs-fiels">date posted</div>
+                  <div className="users-jobs-fiels">job type</div>
                 </div>
-                <div className="my-jobs">
+                <div className="users-jobs">
                   {jobs?.map((job) => (
-                    <div key={job._id} className="my-job">
+                    <div key={job._id} className="user-job">
+                      <div className="job-title job-company-img "><img src={job?.companyID?.logo?.url} alt="" /></div>
                       <div className="job-title">{job?.title}</div>
                       <div className="job-status">{job?.status}</div>
                       <div className="job-category">{job?.categoryId?.name}</div>

@@ -118,7 +118,7 @@ console.log("totalpages: ",totalPages)
   <div className="users-wrapper">
       <ToastContainer />
       <SidebarAdmin />
-      <div className="my-users-header">
+      <div className="my-job-list-container">
         <div className="my-users-title-container">All users</div>
     
         <div className="my-users-container">
@@ -144,6 +144,7 @@ console.log("totalpages: ",totalPages)
               <div className="my-users-fiels">email</div>
               <div className="my-users-fiels">date created</div>
               <div className="my-users-fiels">status</div>
+              {/* <div className="my-users-fiels">subscribed</div>               */}
               <div className="my-users-fiels">user profile</div>
 
 
