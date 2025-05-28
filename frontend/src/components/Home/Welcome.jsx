@@ -13,19 +13,23 @@ const Welcome = () => {
             <p style={{fontSize:"20px",color:"grey",fontFamily:"Roboto , sans-serif"}}>Great platform for the job seeker that searching for new career heights and passionate about startups.</p>
         </div>
         <div className="welcome-search-job-container">
-            <div className="welcome-search-bar-job">
-                <i class="bi bi-search"></i>
-                <input type="text" />
-            </div>
-            <div className="welcome-search-job-filter-location">
-                <i class="bi bi-geo-alt"></i>
-                <select name="" id="">
-                    <option value="Tunisia">Sousse, Tunisia</option>
-                </select>
-            </div>
-            <div className="welcome-search-job-button">
-                <button>Search my job</button>
-            </div>
+             <div className="welcome-jobs-search-bar-job">
+    <i className="bi bi-search"></i>
+    <input type="text" placeholder="Search for jobs..."  
+ />
+  </div>
+           <div className="welcome-jobs-search-job-filter-location">
+    <i className="bi bi-geo-alt"></i>
+    <select >
+      <option value="Sousse">Sousse</option>
+      <option value="Tunisia">Tunisie</option>
+      <option value="Monastir">Monastir</option>
+
+    </select>
+  </div>
+           <div className="welcome-jobs-search-job-button">
+    <button onClick={() => searchJob({ query: searchQuery, location: selectedLocation })}>Search</button>
+  </div>
         </div>
 
 

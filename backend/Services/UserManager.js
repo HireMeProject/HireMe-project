@@ -113,11 +113,14 @@ class UserManager extends IUser{
       throw { status: 400, message: "Company is required" };
     }
     // pour chercher avec lowercase
-    const company = await Company.findOne({
+    let company = await Company.findOne({
       name: { $regex: new RegExp(`^${recruiterData.company}$`, "i") },
     });
-    if (!company) {
-      throw { status: 401, message: "Company not found" };
+    if (company) {
+      throw { status: 401, message: "Company name already used" };
+    }
+    else{
+      company= await CompanyManager.addCompany(recruiterData.company);
     }
     const companyId = company._id;
     const {

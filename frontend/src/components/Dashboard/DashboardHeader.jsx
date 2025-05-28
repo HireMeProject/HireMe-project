@@ -44,6 +44,18 @@ const DashboardHeader = ({setSearchTerm,searchTerm}) => {
                  setUser(response.data.candidate);
 
               }
+               else {
+                response = await axios.get("http://localhost:8000/profile-admin", {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                  'Content-Type': 'application/json',
+                },
+                validateStatus: (status) => true,
+              });          
+              localStorage.setItem("profile-picture",response.data.user.profilePhoto.url);
+                 setUser(response.data.user);
+
+              }
             } catch (error) {
               console.error("Error fetching profile:", error.response?.data || error.message);
             }

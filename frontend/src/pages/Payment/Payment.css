@@ -2,7 +2,8 @@
   display: flex;
   min-height: 100vh;
   background-color: #f5f7fa;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        width: 100%;
+  font-family: sans-serif;
 }
 
 /* Main content */
@@ -23,9 +24,9 @@
   padding-bottom:1rem ;
   border-bottom:1px solid rgb(162, 162, 162);
 }
-.mypayments-title-list{
+/* .mypayments-title-list{
   
-}
+} */
 
 /* List container */
 .myPayments-list {

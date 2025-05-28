@@ -12,17 +12,17 @@ import "react-toastify/dist/ReactToastify.css";
 const emailReducer = (prevState, actions) => {
   switch (actions.name) {
     case "USER_TYPING":
-      // setInputCheck(email:"entrer un email valide"); car on peut pas utiliser directement setState dans useReducer
+      // setInputCheck(email:"Enter a valid email address"); car on peut pas utiliser directement setState dans useReducer
       return {
         value: actions.payload,
         isValid: actions.payload.includes("@"),
-        error: actions.payload.includes("@") ? null : "Entrer un email valide",
+        error: actions.payload.includes("@") ? null : "Enter a valid email address",
       };
     case "USER_TYPING_DONE":
       return {
         value: prevState.value,
         isValid: prevState.value.includes("@"),
-        error: prevState.value.includes("@") ? null : "Entrer un email valide",
+        error: prevState.value.includes("@") ? null : "Enter a valid email address",
       };
     default:
       return { value: "", isValid: null };
@@ -36,7 +36,7 @@ const passwordReducer = (prevState, actions) => {
         isValid: actions.payload.length >= 8,
         error: actions.payload.length >= 8
           ? null
-          : "Votre mot de passe doit contenir au moins 8 caracteres",
+          : "Your password should have at least 8 letters",
       };
     case "USER_TYPING_DONE":
       return {
@@ -44,7 +44,7 @@ const passwordReducer = (prevState, actions) => {
         isValid: prevState.value.length >= 8,
         error: prevState.value.length >= 8
           ? null
-          : "Votre mot de passe doit contenir au moins 8 caracteres",
+          : "Your password should have at least 8 letters",
       };
     default:
       return { value: "", isValid: null };
@@ -59,7 +59,7 @@ const phoneNumberReducer = (prevState, actions) => {
         isValid: /^\d+$/.test(actions.payload),
         error: /^\d+$/.test(actions.payload)
           ? null
-          : "Votre numero de telephone doit etre valide",
+          : "enter a valid phone number",
       };
     case "USER_TYPING_DONE":
       return {
@@ -67,7 +67,7 @@ const phoneNumberReducer = (prevState, actions) => {
         isValid: /^\d+$/.test(prevState.value),
         error: /^\d+$/.test(prevState.value)
           ? null
-          : "Votre numero de telephone doit etre valide",
+          : "enter a valid phone number",
       };
 
     default:
@@ -83,7 +83,7 @@ const fieldsReducer = (prevState, actions) => {
         [actions.field]: {  
           value: actions.payload,
           isValid: actions.payload.length > 0,
-          error: actions.payload.length > 0 ? null : "Ce champ est obligatoire"
+          error: actions.payload.length > 0 ? null : "This field is required"
         }
       };
     case "VALIDATE_FIELD":
@@ -92,7 +92,7 @@ const fieldsReducer = (prevState, actions) => {
         [actions.field]: {
           ...prevState[actions.field],
           isValid: prevState[actions.field]?.value?.length > 0,
-          error: prevState[actions.field]?.value?.length > 0 ? null : "Ce champ est obligatoire"
+          error: prevState[actions.field]?.value?.length > 0 ? null : "This field is required"
         }
       };
     default:

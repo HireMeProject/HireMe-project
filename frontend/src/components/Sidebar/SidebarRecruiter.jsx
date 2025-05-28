@@ -77,7 +77,7 @@ const SidebarRecruiter = () => {
       
   return (
     <div className="sidebar">
-                <img className='logo-navbar' src={logo} alt="" />
+                <img className='logo-sidebar' src={logo} alt="" />
 
                         <ul className="nav-links-dashboard">
                         <Link to="/"  className={`sidebar-link-dashboard `} >

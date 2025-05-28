@@ -56,8 +56,10 @@ const Navbar = () => {
                         (<div className="user-profile">
                             {role==="recruiter"?(                            
                                 <Link to="/Dashboard"><img src={profilePicture} alt="User" /></Link>
-                                ):(
+                                ):role==="candidate"?(
                                     <Link to="/Dashboard-candidate"><img src={profilePicture} alt="User" /></Link>
+                                ):(
+                                    <Link to="/Dashboard-admin"><img src={profilePicture} alt="User" /></Link>
                                 )}
                           </div>)
                     }

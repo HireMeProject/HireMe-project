@@ -15,6 +15,8 @@ router.route("/joboffers/:id").get(GetJobOfferpById);
 router.route("/joboffers/apply/:id").post(verifyCandidate,CreateApplication);
 router.route("/myapplications").get(verifyCandidate,GetMyApplications);
 router.route("/profile").get(verifyCandidate,GetProfile);
+router.route("/company/:id").get(verifyCandidate,GetProfile);
+
 // router.route("/upload-Cv").post(verifyCandidate,CvUpload,updateUserCV);
 router.route("/upload-Cv")
   .post(VerifyToken, CvUpload.single("cv"), CvUploadCtrl);
@@ -23,7 +25,7 @@ router.route("/upload-Cv")
 //   .post(VerifyToken, CvUpload.single("file"), CvUploadCtrl);
 // router.route("/profile/cv-upload")
 //   .post(CvUpload.single("file"), addCv)
-// router.route("/profile/cv-upload").get(CvUploadCtrl);
+// router.route("/profile/cv-upload").get(CvUploadCtrl);ss
 // router.route("/company/:id").get(GetCompanyById);
 
 

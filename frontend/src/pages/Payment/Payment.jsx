@@ -36,8 +36,8 @@ const Payment = () => {
     <div className="payment-container">
        <ToastContainer />
         <SidebarRecruiter />
-        <div className="mypayments-wrapper">
-          <div className="mypayments-header">
+<div className="my-job-list-container">
+            <div className="mypayments-header">
           <div className="mypayments-title"><h2>My payments</h2></div>
           <div className="mypayments-title-list"><h2>My payments list</h2></div>
 

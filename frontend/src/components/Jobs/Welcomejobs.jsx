@@ -19,7 +19,7 @@ const Welcomejobs = () => {
       <div className='Welcome-jobs-part-container'>
               <div className="welcome-jobs-title">
                   <span className="">Find Your </span>
-                  <span style={{"color":"#26A4FF"}}>DreamJob</span>
+              a    <span style={{"color":"#26A4FF"}}>DreamJob</span>
                   <div className='vector-img-container'>
                   <img className='vector-img' src={vector} alt="" srcset="" />
                   </div>

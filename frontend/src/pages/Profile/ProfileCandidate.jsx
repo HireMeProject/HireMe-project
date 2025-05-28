@@ -408,8 +408,8 @@ return (
               <textarea type="text" name="skills" value={newData.skills || []}  {...register("skills")} onChange={handleInputChange}  />
             </label>
             <div className="form-buttons">
-              <button type="submit" className="save-button"  >Sauvegarder</button>
-              <button type="button" className="cancel-button" onClick={() => setEditMode(false)}>Annuler</button>
+              <button type="submit" className="save-button"  >Save</button>
+              <button type="button" className="cancel-button" onClick={() => setEditMode(false)}>Cancel</button>
             </div>
           </form>
         )}

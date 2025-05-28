@@ -94,7 +94,13 @@ const verifySubscriptionRecruiter=async(req,res,next)=>{
     try{
         const userId=req.user.id;
         const paymentDone=await Payment.find({client:userId}).sort({ paymentDate: -1 });; //c est une liste 
-console.log("payment done : ",paymentDone[0])
+console.log("payment done : ",paymentDone.length)
+        if(paymentDone.length===0){
+            console.log("0000")
+            return res.status(401).json({message:"you need to pay first."})
+        }
+        else{
+            console.log("11111")
         if(paymentDone[0].status==="Failed"){
             return res.status(401).json({message:"you need to pay first."})
         }
@@ -111,9 +117,11 @@ console.log("payment done : ",paymentDone[0])
         else if(paymentDone[0].status==="Pending"){
             return res.status(400).json({message:"payment status is still pending..."})
         }
-        else  if (paymentDone[0].status === "Failed") {
-      return res.status(401).json({ message: "payment failed ,  Please retry" });
     }
+    //     else  if (paymentDone[0].status === "Failed") {
+    //   return res.status(401).json({ message: "payment failed ,  Please retry" });
+    // }
+
     }
     catch(error){
         console.error(error);

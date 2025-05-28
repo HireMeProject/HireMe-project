@@ -13,7 +13,7 @@ const Company = () => {
   const [company, setCompany] = useState({});
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(true); // <-- Ajout du state "loading"
-  const [employees, setEmployees] = useState([]); // liste locale des employés avec index et data
+  // const [employees, setEmployees] = useState([]); // liste locale des employés avec index et data
   const [newEmployee, setNewEmployee] = useState({ name: "", email: "", position: "" });
   
   const [editMode,setEditMode] = useState(false);
@@ -155,8 +155,9 @@ const response=await axios.post(`http://localhost:8000/mycompany/addMembers/${co
         });
         
         if(response.status===200){
-          setEmployees([...employees,{...newEmployee ,index:response.data.index}]);
-          setNewEmployee({name:"",position:"",email:""});
+         await GetCompany(); // Recharger les données de l'entreprise
+        setNewEmployee({ name: "", position: "", email: "" });
+        toast.success("Employee added successfully!");
         }
         setAddEmpForm(false);
         
@@ -189,20 +190,23 @@ const response=await axios.post(`http://localhost:8000/mycompany/addMembers/${co
       );
 
       if (res.status === 200) {
-        alert("Photo uploadée avec succès !");
+        toast.success("Photo uploaded successfully !");
         // Met à jour la photo dans la liste locale
-        setEmployees((prev) =>
-          prev.map((emp) =>
-            emp.index === index ? { ...emp, profilePic: res.data.profilePic.url } : emp
+        setCompany(prev => ({
+          ...prev,
+          employeesList: prev.employeesList.map((emp, empIndex) =>
+            empIndex === index 
+              ? { ...emp, profilePic: { url: res.data.profilePic.url } }
+              : emp
           )
-        );
+        }));
         setFile(null);
         setAddEmpForm(false);
 
       }
     } catch (err) {
       console.error("Erreur upload photo:", err);
-      alert("Erreur lors de l'upload de la photo");
+      toast.success("Error while uploading profile picture !");
     }
   };
   const handleChangeAddEmp=()=>{
@@ -272,14 +276,14 @@ const response=await axios.post(`http://localhost:8000/mycompany/addMembers/${co
         </label>
         <div className="form-buttons">
           <button type="submit" className="save-button">
-            Sauvegarder
+            Save
           </button>
           <button
             type="button"
             className="cancel-button"
             onClick={() => setEditMode(false)}
           >
-            Annuler
+            Cancel
           </button>
         </div>
       </form>

@@ -222,7 +222,7 @@
         
         /* CTA Section */
         .cta-section {
-            background: linear-gradient(135deg, #2563eb, #1e40af);
+            background: #0b122b;
             color: white;
             padding: 80px 0;
             text-align: center;
@@ -279,50 +279,7 @@
         }
         
         /* Footer */
-        footer {
-            background-color: #1e293b;
-            color: white;
-            padding: 60px 0 20px;
-        }
         
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-        
-        .footer-column h3 {
-            font-size: 18px;
-            margin-bottom: 20px;
-            color: white;
-        }
-        
-        .footer-column ul {
-            list-style: none;
-        }
-        
-        .footer-column ul li {
-            margin-bottom: 10px;
-        }
-        
-        .footer-column ul li a {
-            color: #cbd5e1;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .footer-column ul li a:hover {
-            color: white;
-        }
-        
-        .footer-bottom {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid #334155;
-            color: #94a3b8;
-            font-size: 14px;
-        }
         
         /* Responsive Styles */
         @media (max-width: 768px) {

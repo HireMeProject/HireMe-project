@@ -240,7 +240,7 @@ const MyJobs = () => {
         });
         setEditMode(false);
       } else {
-        toast.error(response.data.message || "Identifiants incorrects.", {
+        toast.error(response.data.message || "Error.", {
           position: "top-right",
         });
       }
@@ -309,8 +309,8 @@ const MyJobs = () => {
               >
                 <option value="">Category</option>
                 {categories?.map((category) => (
-                  <option value={category.name} key={category._id}>
-                    {category.name}
+                  <option value={category?.name} key={category?._id}>
+                    {category?.name}
                   </option>
                 ))}
                 {/* Ajoute d'autres catégories ici */}
@@ -318,14 +318,14 @@ const MyJobs = () => {
             </label>
             <div className="form-buttons">
               <button type="submit" className="save-button">
-                Sauvegarder
+                Save
               </button>
               <button
                 type="button"
                 className="cancel-button"
                 onClick={() => setEditMode(false)}
               >
-                Annuler
+                Cancel
               </button>
             </div>
           </form>
@@ -496,14 +496,14 @@ const MyJobs = () => {
                 </label>
                 <div className="form-buttons">
                   <button type="submit" className="save-button">
-                    Sauvegarder
+                    Save
                   </button>
                   <button
                     type="button"
                     className="cancel-button"
                     onClick={() => setPostJobMode(false)}
                   >
-                    Annuler
+                    Cancel
                   </button>
                 </div>
               </form>

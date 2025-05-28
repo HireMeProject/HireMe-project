@@ -38,7 +38,7 @@ const ProfileAdmin = () => {
             });
             console.log("Réponse du serveur dans user profile methode fetch:", response.data);
             setUser(response.data.user);
-            // setNewData(recruiterData);
+            setNewData(response.data.user);
              setEditMode(false);
             // setEditMode(false);
             //localStorage.setItem("profile-picture",response.data.recruiter.profilePhoto.url);
@@ -95,7 +95,9 @@ const HandleEdit=async (data)=>{
       }));
       setUser(prevData => ({
         ...prevData, 
-        ...response.data.user 
+        // ...response.data.user 
+        ...newData 
+
       }));
 
       // reset(response.data.user); 
@@ -104,7 +106,7 @@ const HandleEdit=async (data)=>{
                             autoClose: 3000, 
                           });
                           setEditMode(false);
-                          fetchUserProfile(); 
+                          // fetchUserProfile(); 
                   } 
                   else {
                       toast.error(response.data.message || "Identifiants incorrects.", {
@@ -299,8 +301,8 @@ console.log("formData",formData);
             </label>
             
             <div className="form-buttons">
-              <button type="submit" className="save-button"  >Sauvegarder</button>
-              <button type="button" className="cancel-button" onClick={() => setEditMode(false)}>Annuler</button>
+              <button type="submit" className="save-button"  >Save</button>
+              <button type="button" className="cancel-button" onClick={() => setEditMode(false)}>Cancel</button>
             </div>
           </form>
         )}

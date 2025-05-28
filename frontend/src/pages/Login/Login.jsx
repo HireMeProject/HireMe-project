@@ -11,17 +11,17 @@ import axios from "axios";
 const emailReducer = (prevState, actions) => {
   switch (actions.name) {
     case "USER_TYPING":
-      // setInputCheck(email:"entrer un email valide"); 
+      // setInputCheck(email:"Enter a valid email address"); 
       return {
         value: actions.payload,
         isValid: actions.payload.includes("@"),
-        error: actions.payload.includes("@") ? null : "Entrer un email valide",
+        error: actions.payload.includes("@") ? null : "Enter a valid email address",
       };
     case "USER_TYPING_DONE":
       return {
         value: prevState.value,
         isValid: prevState.value.includes("@"),
-        error: prevState.value.includes("@") ? null : "Entrer un email valide",
+        error: prevState.value.includes("@") ? null : "Enter a valid email address",
       };
     default:
       return { value: "", isValid: null };
@@ -35,7 +35,7 @@ const passwordReducer = (prevState, actions) => {
         isValid: actions.payload.length >= 8,
         error: actions.payload.length >= 8
           ? null
-          : "Votre mot de passe doit contenir au moins 8 caracteres",
+          : "Your password should have at least 8 letters",
       };
     case "USER_TYPING_DONE":
       return {
@@ -43,7 +43,7 @@ const passwordReducer = (prevState, actions) => {
         isValid: prevState.value.length >= 8,
         error: prevState.value.length >= 8
           ? null
-          : "Votre mot de passe doit contenir au moins 8 caracteres",
+          : "Your password should have at least 8 letters",
       };
     default:
       return { value: "", isValid: null };

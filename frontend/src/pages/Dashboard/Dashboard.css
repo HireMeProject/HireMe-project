@@ -2,7 +2,9 @@
 .dashboard-container {
     display: flex;
     min-height: 100vh;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          width: 100%;
+
+  font-family: sans-serif;
   }
   
   .sidebar {

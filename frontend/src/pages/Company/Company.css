@@ -3,7 +3,8 @@
   min-height: 100vh;
   font-family: sans-serif;
     background-color: #f9f9f9;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width: 100%;
+
   }
   .my-company-profile{
     margin: 2rem auto;

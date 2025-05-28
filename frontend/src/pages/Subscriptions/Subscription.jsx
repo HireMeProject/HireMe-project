@@ -95,7 +95,7 @@ if (response.status!==200) {
     <div className="subscription-container">
        <ToastContainer />
         <SidebarRecruiter />
-        <div className="Subscription-wrapper">
+        <div className="my-job-list-container">
         <h2>Subscriptions</h2>
         <div className="sub-container">
         {subscription?.map((item,index)=>

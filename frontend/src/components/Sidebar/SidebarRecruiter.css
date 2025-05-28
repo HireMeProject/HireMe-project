@@ -9,6 +9,12 @@
     flex-direction: column;
     
 }
+.logo-sidebar{
+     width: 120px;
+    height: auto;
+    margin-left: 20%;
+    transition: transform var(--transition-speed) ease;
+}
 .sidebar-link-dashboard{
     text-decoration: none;
     color: aliceblue;

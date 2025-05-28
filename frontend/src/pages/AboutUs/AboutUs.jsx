@@ -5,6 +5,8 @@ import logo from '../../assets/HireMe-logo.png'; // Replace with your actual log
 import Navbar from '../../components/Navbar/Navbar';
 import teamwork from "../../assets/teamwork.jpg"
 import Footer from '../../components/Footer/Footer';
+import aya from "../../assets/aya.jpg";
+import saoussen from "../../assets/saoussen.jpg";
 
 const AboutUs = () => {
   return (
@@ -103,21 +105,21 @@ const AboutUs = () => {
             </div>
             <div class="team-grid">
                 <div class="team-member">
-                    <img src="https://via.placeholder.com/150" alt="Team Member" />
-                    <h3>Sarah Johnson</h3>
+                    <img src={aya} alt="Team Member" />
+                    <h3>Aya Ben Torkia</h3>
                     <p>CEO & Founder</p>
                     <div class="social-links">
                         <a href="#"><i>LinkedIn</i></a>
-                        <a href="#"><i>Twitter</i></a>
+                        {/* <a href="#"><i>Twitter</i></a> */}
                     </div>
                 </div>
                 <div class="team-member">
-                    <img src="https://via.placeholder.com/150" alt="Team Member" />
-                    <h3>Michael Chen</h3>
-                    <p>CTO</p>
+                    <img src={saoussen} alt="Team Member" />
+                    <h3>Saoussen Meliene</h3>
+                    <p>CEO & Founder</p>
                     <div class="social-links">
                         <a href="#"><i>LinkedIn</i></a>
-                        <a href="#"><i>Twitter</i></a>
+                        {/* <a href="#"><i>Twitter</i></a> */}
                     </div>
                 </div>
                 {/* <div class="team-member">

@@ -101,7 +101,7 @@ const ContactUs = () => {
     </section>
 
     {/* <!-- FAQ Section --> */}
-    <section className="faq-section">
+    {/* <section className="faq-section">
         <div className="container">
             <div className="section-title">
                 <h2>Frequently Asked Questions</h2>
@@ -155,7 +155,7 @@ const ContactUs = () => {
                 </div>
             </div>
         </div>
-    </section>
+    </section> */}
 
     {/* <!-- Map Section --> */}
     <section className="map-section">

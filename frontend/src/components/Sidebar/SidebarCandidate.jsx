@@ -51,9 +51,12 @@ const SidebarCandidate = () => {
       
   return (
     <div className="sidebar">
-                <img className='logo-navbar' src={logo} alt="" />
+                <img className='logo-sidebar' src={logo} alt="" />
 
                         <ul className="nav-links-dashboard">
+                            <Link to="/"  className={`sidebar-link-dashboard `} >
+                                                    <i class="icons-sidebar bi bi-house"></i>Home
+                                                        </Link>
                             <Link to="/Dashboard-candidate"  className={`sidebar-link-dashboard ${location.pathname==="/Dashboard-candidate" ? "active-dashboard" : "" }`} >
                                 <i className="icons-sidebar bi bi-speedometer2"></i>Dashboard
                             </Link>

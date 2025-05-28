@@ -102,7 +102,7 @@ const Jobs = ({
               </div>
             </div>
             <div className="apply-btn-container">
-              <button className="apply-btn" onClick={(e)=>VerifyLoggedIn(job._id)}>Apply</button>
+              <button className="apply-btn" onClick={(e)=>VerifyLoggedIn(job._id)}>Details</button>
             </div>
           </div>
         ))}

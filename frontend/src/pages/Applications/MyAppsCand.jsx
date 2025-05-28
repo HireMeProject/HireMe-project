@@ -71,6 +71,7 @@ const MyAppsCand = () => {
           },
         }
       );
+      console.log("companyDataaaa : ",response.data)
       setCompanyId(companyID);
       setCompanyData(response.data.message);
       setShowModal(true);
