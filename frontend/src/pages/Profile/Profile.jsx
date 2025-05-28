@@ -56,7 +56,7 @@ const Profile = () => {
             const {companyLogo,...recruiterData}=response.data.recruiter;
             setNewData(recruiterData);
              setEditMode(false);
-            // setEditMode(false);
+           // setEditMode(false);
             //localStorage.setItem("profile-picture",response.data.recruiter.profilePhoto.url);
 
             // reset(response.data.user);
@@ -67,7 +67,7 @@ const Profile = () => {
       
         fetchUserProfile();
       }, []);
-      
+       
       let profileFields=[];
 profileFields = [
 { label: "Name", value: user?.name },
@@ -158,11 +158,10 @@ console.log("formData",formData);
 
     if (response.status === 200) {
       toast.success("Photo uploaded successfully!");
-      // Mets à jour le state utilisateur avec la nouvelle photo
       setUser(prev => ({
         ...prev,
         profilePhoto: {
-          ...prev.profilePhoto, // on garde les autres champs comme publicId
+          ...prev.profilePhoto, 
           url: response.data.profilePhoto.url
         }
       }));

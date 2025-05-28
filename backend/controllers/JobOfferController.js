@@ -226,8 +226,31 @@ const DeleteJobOffer = async (req, res, next) => {
     return res.status(500).json({ status: "error", message: "Server error" });
   }
 };
+/**
+ * @desc SearchJob
+ * @route
+ * @method get
+ * @access public
+ */
+const SearchJob=async(req,res)=>{
+  try{
+    const jobs=await JobOfferManager.SearchJob(req.query);
+        return res.status(200).json({ status: "success", message: jobs });
+
+  }
+  catch (error) {
+    console.log(error);
+    if (error.status) {
+      return res
+        .status(error.status)
+        .json({ status: "error", message: error.message });
+    }
+    return res.status(500).json({ status: "error", message: "Server error" });
+  }
+}
 
 module.exports = {
+  SearchJob,
   PostJobOffer,
   UpdateJobOffer,
   GetAllJobOffers,

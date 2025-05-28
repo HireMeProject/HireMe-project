@@ -26,6 +26,8 @@ import CompanyProfile from './pages/Company/CompanyProfile';
 import UserProfile from './pages/Users/UserProfile';
 import MySubscriptions from './pages/Subscriptions/MySubscriptions';
 import Adminjobs from './pages/Jobs/Adminjobs';
+import AboutUs from './pages/AboutUs/AboutUs';
+import ContactUs from './pages/ContactUs/ContactUs';
 function App() {
 
   return (
@@ -58,6 +60,8 @@ function App() {
         <Route path="/user-profile" element={<UserProfile />} />
         <Route path='/my-subscriptions' element={<MySubscriptions />} />
         <Route path='/users-jobs' element={<Adminjobs />} />
+        <Route path='/about-us' element={<AboutUs />} />
+        <Route path='/contact-us' element={<ContactUs />} />
 
       </Routes>
      

@@ -10,7 +10,9 @@ const { UpdateUser,
     RegisterUser,
     LoginUser,
     logout,
-    profilePhotoUploadCtrl,}=require("../controllers/UserController");
+    profilePhotoUploadCtrl,
+    getSubscribedRecruitersCount,
+    GetAllUsersWithoutQuery,}=require("../controllers/UserController");
 const {verifyAdmin,
     VerifyToken,
     verifyCandidate,
@@ -23,7 +25,8 @@ const {
     GetAllJobOffers,
     GetJobOfferpById,
     DeleteJobOffer,
-    GetMyJobOffers,}=require("../controllers/JobOfferController");
+    GetMyJobOffers,
+    SearchJob,}=require("../controllers/JobOfferController");
 const JobOfferManager=require("../Services/JobOfferManager");
 const {
     createCategory,
@@ -43,18 +46,21 @@ router.route("/signuprecruiter").post(RegisterRecruiter, userManager.ValidateRec
 router.route("/login").post(LoginUser, userManager.validateLoginUser);
 router.route("/logout").post(logout); 
 router.route("/update-profile").patch(VerifyToken,UpdateUser);
-router.route("/users").get(verifyAdmin,verifyAdmin,GetAllUsers);
+router.route("/users").get(verifyAdmin,GetAllUsers);
+router.route("/all-users").get(verifyAdmin,GetAllUsersWithoutQuery);
 router.route("/users/:role").get(GetUsersByrole);
-router.route("/users-profile/:id").get(verifyAdmin,GetUserById);
+router.route("/users-profile/:id").get(VerifyToken,GetUserById);
 // router.route("/myprofile").get(VerifyToken,GetUserById);
 router.route("/users/:id").post(verifyAdmin,DeleteUser);
 router.route("/profile/profile-photo-upload")
   .post(VerifyToken, photoUpload.single("image"), profilePhotoUploadCtrl);
 
-  router.route("/mycompany/logo-photo-upload")
+router.route("/mycompany/logo-photo-upload")
   .post(VerifyToken, photoUpload.single("image"), companyPhotoUploadCtrl);
+router.get("/subscribed-recruiters-count", getSubscribedRecruitersCount);
 //job offers
 router.route("/joboffers").get(GetAllJobOffers);
+router.route("/joboffers-search").get(SearchJob);
 router.route("/job-offerss").post(verifyRecruiter,PostJobOffer, JobOfferManager.ValidateJobOffer);
 router.route("/job-offerss").post(verifyRecruiter,UpdateJobOffer, JobOfferManager.ValidateUpdateJobOffer);
 router.route("/job-offerss").post(verifyRecruiter,GetJobOfferpById);

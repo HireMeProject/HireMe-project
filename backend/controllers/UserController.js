@@ -5,6 +5,7 @@ const {User}=require("../models/User");
 const UserManager=require("../Services/UserManager");
 const fs = require("fs");
 const path = require("path");
+const {Payment} =require("../models/Payment");
 const {
   cloudinaryUploadImage,
   cloudinaryRemoveImage,
@@ -199,6 +200,18 @@ const GetAllUsers=async(req,res,next)=>{
         }
         return res.status(500).json({ status: "error", message: error.message });
     }}
+    //without queries 
+    const GetAllUsersWithoutQuery=async(req,res,next)=>{
+    try {
+        const users = await UserManager.getAllUsersWithoutQuery();
+        return res.status(200).json({ status: "success", users });
+    } catch (error) {
+        console.log("error fetching all users :",error)
+        if (error.status) {
+            return res.status(error.status).json({ status: "error", message: error.message });
+        }
+        return res.status(500).json({ status: "error", message: error.message });
+    }}
 /**
  * @desc Get users by role
  * @route /users/:role
@@ -359,6 +372,31 @@ const DeleteUser=async(req,res,next)=>{
     }
     
   };
+  /**
+   * 
+   */
+  const getSubscribedRecruitersCount = async (req, res) => {
+  try {
+    const result = await Payment.aggregate([
+      {
+        $match: { status: "Succeeded" }
+      },
+      {
+        $group: { _id: "$client" }
+      },
+      {
+        $count: "totalSubscribedRecruiters"
+      }
+    ]);
+
+    const count = result.length > 0 ? result[0].totalSubscribedRecruiters : 0;
+
+    return res.status(200).json({ status: "success",count });
+  } catch (error) {
+    console.error("Erreur dans getSubscribedRecruitersCount :", error.message);
+        return res.status(600).json({ status: "error", message: error.message });
+  }
+};
   
   
 
@@ -381,4 +419,6 @@ module.exports={
     updateUserCV,
     ManageUserStatus,
     GetUserProfileById,
+    getSubscribedRecruitersCount,
+    GetAllUsersWithoutQuery,
 }

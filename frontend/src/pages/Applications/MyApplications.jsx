@@ -8,6 +8,8 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const MyApplications = () => {
   const [applications, setApplications] = useState([]);
+      const [userId,setUserId]=useState("");
+  
   const [statuses, setStatuses] = useState({});
   const [applicationId,setApplicationId]=useState("");
   const [profileMode,setProfileMode]=useState(false);
@@ -99,13 +101,19 @@ const MyApplications = () => {
     setFiltreStatus(e.target.value);
   };
   //change profile mode and set application id
-  const changeProfileMode=(e,appId)=>{
-    setApplicationId(appId);
-    e.preventDefault();
-    localStorage.setItem("applicationId",appId);
-    setTimeout(() => navigate("/candidate-profile"), 1000);  }
+  // const changeProfileMode=(e,appId)=>{
+  //   setApplicationId(appId);
+  //   e.preventDefault();
+  //   localStorage.setItem("applicationId",appId);
+  //   setTimeout(() => navigate("/candidate-profile"), 1000);  }
 
-  
+  const changeProfileMode=(e,Id,role)=>{
+      setUserId(Id);
+      e.preventDefault();
+        localStorage.setItem("UserProfileId",Id);
+        setTimeout(() => navigate("/candidate-profile"), 1000);  
+     
+    }
   return (
     <div className="applications-wrapper">
       <ToastContainer />
@@ -169,7 +177,7 @@ const MyApplications = () => {
                     </select>
                   </div>
                   <div className="check-candidate-profile-btn-container">
-                    <button className="check-candidate-profile-btn" onClick={(e)=>changeProfileMode(e,application._id)}><i class="bi bi-person-square"></i><div>profile</div></button>
+                    <button className="check-candidate-profile-btn" onClick={(e)=>changeProfileMode(e,application.candidateID._id)}><i class="bi bi-person-square"></i><div>profile</div></button>
                   </div>
                 </div>
               ))}

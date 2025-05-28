@@ -75,9 +75,9 @@ const handleInputChange = (e) => {
 };
 const HandleEdit=async (data)=>{  
   try{
-    console.log("data recuperer ",data)
-    console.log("token ",token);
-    console.log("new data: 1 ",newData)
+    // console.log("data recuperer ",data)
+    // console.log("token ",token);
+    // console.log("new data: 1 ",newData)
 
     const response=await axios.patch("http://localhost:8000/update-profile",newData,{
       headers: {
@@ -104,6 +104,7 @@ const HandleEdit=async (data)=>{
                             autoClose: 3000, 
                           });
                           setEditMode(false);
+                          fetchUserProfile(); 
                   } 
                   else {
                       toast.error(response.data.message || "Identifiants incorrects.", {

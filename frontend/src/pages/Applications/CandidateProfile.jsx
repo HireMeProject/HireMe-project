@@ -1,95 +1,158 @@
 import React, { useState, useEffect } from "react";
 import SidebarRecruiter from "../../components/Sidebar/SidebarRecruiter";
 import axios from "axios";
-import { useForm } from "react-hook-form";
 import "./CandidateProfile.css";
 import { toast, ToastContainer } from "react-toastify";
+import { IoMail } from "react-icons/io5";
+import { BsBuildingFill } from "react-icons/bs";
+import { MdLocationOn } from "react-icons/md";
+import { FaRegCalendarAlt,FaPhoneAlt,FaPencilAlt } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import Footer from "../../components/Footer/Footer";
 
 const CandidateProfile = () => {
-    //Get candidate Profile
-      const token = localStorage.getItem("token");
-      const applicationId=localStorage.getItem("applicationId");
-      const [candidateProfile,setCandidateProfile]=useState(null);
-      console.log("app id debuttt: ",applicationId);
-
-  useEffect(()=>{
-    const GetCandidateProfile=async()=>{
-        try{
-            const response=await axios.get(`http://localhost:8000/myapplications/${applicationId}/profile`,
-                {headers:{
-                    Authorization:`Bearer ${token}`,
-                    "Content-Type": "application/json",
-                }},
-                
-            );
-            console.log("applications response apres axios:", response.data.candidateProfile);
-            if(response.status===200){
-                setCandidateProfile(response.data.candidateProfile);
-            }
-        }
-        catch (error) {
-          console.error("Error fetching candidate Profile:", error);
-          toast.error("Failed to load candidate Profile. Please try again.");
-        }
-    
-      };
-    GetCandidateProfile();
-
-},[token,applicationId])
-console.log("candidate profile response:", candidateProfile);
-console.log("id candidate response:", applicationId);
-
-    let profileFields;
-    profileFields = [
-        { label: "Name", value: candidateProfile?.name },
-        { label: "Email", value: candidateProfile?.email },
-        { label: "PhoneNumber", value: candidateProfile?.phoneNumber },
-        { label: "Address", value: candidateProfile?.address },
-        { label: "Status", value: candidateProfile?.status },
-        //  { label: "Company", value: [<img src={user.companyLogo}/>,user.company] },
-        // { label: "CV", value: candidateProfile.cv.url },
-        { label: "Skills", value: candidateProfile?.skills },
-        ];
-  return (
-    <div className="candidate-profile-container">
-        <SidebarRecruiter />
-        <div className="candidate-profile-wrapper">
-        <h2> {candidateProfile?.name} Profile</h2>
-        <div className="candidate-pic-container">
-            <img src={candidateProfile?.profilePhoto?.url} alt="Profile" className="candidate-pic" />
-          </div>
-          <ul className="candidate-list">
-            {profileFields?.map((field,index)=>
-            field.value?(
-              <li key={index} className="candidate-item">
-                <strong>{field.label}:</strong> {field.value}
-              </li>
-               
-            ):null)
+    const [user, setUser] = useState(null);
+        const token = localStorage.getItem("token"); // Vérifier la récupération du token
+        let role="candidate";
+        const userId=localStorage.getItem("UserProfileId");
+        console.log("userIDDD: ",userId)
+        const navigate=useNavigate();
+        useEffect(() => {
+        const fetchUserProfile = async () => {
+          try {
+            const response = await axios.get(`http://localhost:8000/users-profile/${userId}`, {
+              headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+              },
+              validateStatus: (status) => true,
+            });
+            console.log("Réponse du serveur dans user profile methode fetch:", response.data);
+            setUser(response.data.user);
+            
+          
+           
+          } catch (error) {
+            console.error("Error fetching profile:", error.response?.data || error.message);
           }
-          <li className="candidate-item">
-          <strong>Cv :</strong>
-           {candidateProfile?.cv?.url ? (
-                  <>
-                    <a 
-                      href={candidateProfile?.cv.downloadUrl || `${candidateProfile?.cv.url}?response-content-disposition=attachment`} 
-                      download
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ marginRight: "10px" }}
-                    >
-                      My CV
-                    </a>
-                
-                  </>
-                ) : (
-                  <span>Aucun CV disponible</span>
-                )}
-                </li>
-          </ul>
-        </div>
+        };
+      
+        fetchUserProfile();
+      }, []);
+
+  return (
+   <>
+  <div className="Profile-wrapper-container">
+            <ToastContainer /> 
+    
+    <SidebarRecruiter />
+    <div className="profile-container">
         
-    </div>
+        <div className="profile-all-container">
+        <div className="profile-header">
+            <img src={user?.profilePhoto?.url} alt="Profile" className="profile-picture" />
+        <h1 class="profile-user-name" >{user?.name}</h1>
+        <h2 class="profile-user-role">{user?.role}</h2>
+        <span class="profile-user-status">{user?.status}</span>
+        </div>
+        <div class="profile-body">
+                <div class="info-section">
+                    <h3><i class="fas fa-user-circle"></i> Personal informations</h3>
+                    
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <IoMail />
+                        </div>
+                        <div class="info-content">
+                            <h4>Email</h4>
+                            <p id="profile-email">{user?.email}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <FaPhoneAlt />
+                        </div>
+                        <div class="info-content">
+                            <h4>Phone number</h4>
+                            <p id="profile-phone">{user?.phoneNumber}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-venus-mars"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Gender</h4>
+                            <p id="profile-gender">{user?.gender}</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <FaRegCalendarAlt />
+                        </div>
+                        <div class="info-content">
+                            <h4>Birthdate</h4>
+                            <p id="profile-gender">{user?.birthDate.split('T')[0]}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <MdLocationOn />
+                        </div>
+                        <div class="info-content">
+                            <h4>Adress</h4>
+                            <p id="profile-address">{user?.address}</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="info-section">
+                    <h3><i class="fas fa-briefcase"></i> Professional informations</h3>
+                    
+                    
+            
+                            <>
+                            <div class="company-section">
+                            <h3><BsBuildingFill /> Skills</h3>
+                            <p id="company-name">{user?.skills}</p>
+                            </div>
+                            <div class="company-section">
+                            <h3><BsBuildingFill /> CV</h3>
+                            <p id="company-name">
+                            {user?.cv?.url ? (
+                                <>
+                                  <a 
+                                    href={user.cv.downloadUrl || `${user.cv.url}?response-content-disposition=attachment`} 
+                                    download
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{ marginRight: "10px" }}
+                                  >
+                                    my CV
+                                  </a>
+                                </>
+                              ) : (
+                                <span>Aucun CV disponible</span>
+                              )}
+                                </p>
+                                </div>
+                            </>
+                    </div>
+                    
+  
+                </div>
+            </div>
+        </div>
+          
+       </div>
+         
+      
+            <Footer />
+      </>  
+      
   )
 }
 

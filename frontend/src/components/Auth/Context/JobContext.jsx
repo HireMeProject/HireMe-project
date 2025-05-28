@@ -36,6 +36,28 @@ export const JobProvider = ({ children }) => {
       setLoading(false);
     }
     };
+    const searchJob=async({query,location})=>{
+       setLoading(true);
+      try {
+        const response = await axios.get(`http://localhost:8000/joboffers-search`, {
+          params: {
+            query:query,
+            page:page, limit:limit,
+            location:location,
+
+          },
+        });
+        console.log("jobs response de search job in contexte:", response.data);
+        setJobs(response.data.message.jobs);
+        setTotalPages(Math.ceil(response.data.message.total / limit));
+      } catch (error) {
+        console.error("Error fetching jobs:", error);
+        // toast.error("Failed to load companies. Please try again.");
+      }
+      finally {
+      setLoading(false);
+    }
+    }
 
   return (
     <JobContext.Provider value={{
@@ -46,6 +68,7 @@ export const JobProvider = ({ children }) => {
         setPage,
         totalPages,
         setJobs,
+        searchJob,
       }}>
       {children}
     </JobContext.Provider>

@@ -1,4 +1,5 @@
 const { User } = require("../models/User");
+const {sendStatusChangeEmail}=require("../Services/emailManager")
 const { Candidate } = require("../models/Candidate");
 const {JobOffer}=require("../models/JobOffer");
 const {Application}=require("../models/Application");
@@ -97,12 +98,40 @@ class ApplicationManager extends ApplicationInterface{
             applications};
     
     }
+     async GetMyJobApplicationsWithoutPagination(query,recruiterId){
+        const { status } = query;
+       
+        // Récupérer les offres du recruteur
+        const jobOffers = await JobOfferManager.GetMyJobOffers(recruiterId,"");
+        // Extraire les IDs des offres
+        const jobOfferIds = jobOffers.jobOffersWithCategory.map(job => job._id.toString());
+        
+        // console.log("jobs :" ,jobOfferIds);
+        // Construire le filtre
+        const filtre = { jobID: { $in: jobOfferIds } };
+        // console.log("query :" ,filtre);
+        if (status) filtre.status = { $regex: status, $options: "i" };
+        const total = await Application.find(filtre).countDocuments();
+
+        // Récupérer les candidatures des offres d'emploi du recruteur
+        const applications = await Application.find(filtre)
+            .populate("candidateID", "name email").populate("jobID","title");
+         
+        return {total,
+            applications,
+        };
+    
+    }
     //Recruiter
     async UpdateApplication(query,recruiterId,applicationId,applicationStatus){
         //recuperer la liste de candidature de recruteur
-        const myapplications= await this.GetMyJobApplications(query,recruiterId);
+        let myapplications= await this.GetMyJobApplicationsWithoutPagination(query,recruiterId);
+        myapplications=myapplications.applications;
+                console.log("applicationId : ",applicationId)
+                console.log("myapplications : ",myapplications)
+
         if(!Array.isArray(myapplications)){
-            throw {status:404,message:"No application found for your job offers"};
+            throw {status:404,message:"No application founded for your job offers"};
         }
         // console.log("applicationId:",applicationId);
         //filtrer la liste de candidatures de recruteur selon l id de candidature choisit
@@ -113,28 +142,38 @@ class ApplicationManager extends ApplicationInterface{
         if(!application){
             throw {status:404,message:"No application found to update for your job offers"};
         }
+        const candidate=await Candidate.findById(application.candidateID).populate("candidateId","name email");
+        const job=await JobOffer.findById(application.jobID);
         const applicationToUpdate= await Application.findByIdAndUpdate(
             applicationId,
             {$set:{
                 status:applicationStatus,
             }},{ new: true });
             // console.log("status app : ",applicationStatus)
-
+  await sendStatusChangeEmail(
+      candidate.candidateId.email,
+      candidate.candidateId.name,
+      job.title,
+      applicationStatus
+    );
         return applicationToUpdate;
     }
     //Recruiter
     async GetApplicationById(query,recruiterId,applicationId){
         //recuperer la liste de candidature de recruteur
-        const myapplications= await this.GetMyJobApplications(query,recruiterId);
+        let myapplications= await this.GetMyJobApplications(query,recruiterId);
+        myapplications= myapplications.applications;
+                        console.log("myapplications id in GetApplicationById: ",myapplications)
+
         if(!Array.isArray(myapplications)){
             throw {status:400,message:"No application found for your job offers"};
         }
-        // console.log("applicationId:",applicationId);
+        console.log("applicationId:",applicationId);
         //filtrer la liste de candidatures de recruteur selon l id de candidature choisit
         const application= myapplications.find(app =>{      
             //   console.log("app._id:",app._id.toString());
          return app._id.toString()===applicationId});
-        // console.log("application::",application);
+        console.log("application::",application);
         if(!application){
             throw {status:400,message:"No application found to update for your job offers"};
         }

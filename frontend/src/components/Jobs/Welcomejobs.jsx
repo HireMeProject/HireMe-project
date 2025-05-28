@@ -1,8 +1,19 @@
-import React from 'react'
 import vector from "../../assets/Vector.png";
-
+import { JobContext } from '../Auth/Context/JobContext'; 
+import React, { useState, useEffect,useContext } from "react";
 
 const Welcomejobs = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedLocation, setSelectedLocation] = useState('');
+    const {
+      jobs,
+      loading,
+      fetchJobs,
+      page,
+      setPage,
+      totalPages,
+      searchJob
+    } = useContext(JobContext);
   return (
     <div className="welcome-jobs-container">
       <div className='Welcome-jobs-part-container'>
@@ -17,16 +28,20 @@ const Welcomejobs = () => {
               <div className="welcome-jobs-search-job-container">
   <div className="welcome-jobs-search-bar-job">
     <i className="bi bi-search"></i>
-    <input type="text" placeholder="Search for jobs..." />
+    <input type="text" placeholder="Search for jobs..."  value={searchQuery}
+  onChange={(e) => setSearchQuery(e.target.value)}/>
   </div>
   <div className="welcome-jobs-search-job-filter-location">
     <i className="bi bi-geo-alt"></i>
-    <select>
-      <option value="Tunisia">Sousse, Tunisia</option>
+    <select value={selectedLocation} onChange={(e) => setSelectedLocation(e.target.value)}>
+      <option value="Sousse">Sousse</option>
+      <option value="Tunisia">Tunisie</option>
+      <option value="Monastir">Monastir</option>
+
     </select>
   </div>
   <div className="welcome-jobs-search-job-button">
-    <button>Search</button>
+    <button onClick={() => searchJob({ query: searchQuery, location: selectedLocation })}>Search</button>
   </div>
 </div>
 

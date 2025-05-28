@@ -374,6 +374,13 @@ class UserManager extends IUser{
       // total,
       
   } 
+   async getAllUsersWithoutQuery() {
+     
+    const users = await User.find().select("-password");
+    return users;
+      // total,
+      
+  } 
    /**
   async getAllUsers() {
     
@@ -418,6 +425,8 @@ class UserManager extends IUser{
     return profile;
   }
   async GetUserById(id){
+        console.log("userIDDD : ",id)
+
     const user=await User.findById(id);
     if(!user){
       throw { status: 404, message: "User not found" };

@@ -80,6 +80,7 @@ const UpdateApplication= async(req,res)=>{
     try {
         const recruiterId = req.user.id;
         const applicationId=req.params.id;
+        // console.log("applicationId : ",applicationId)
         const status=req.body.status;
         const applications= await ApplicationManager.UpdateApplication(req.query,recruiterId,applicationId,status);
         return res.status(200).json({ status: "success", applications });

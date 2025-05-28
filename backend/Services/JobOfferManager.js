@@ -7,6 +7,7 @@ const mongoose=require("mongoose")
 const joi=require("joi");
 const { Recruiter } = require("../models/Recruiter");
 const IJobOffer =require("../Interface/JobOfferInterface");
+const { Company } = require("../models/Company");
 
 class JobOfferManager  extends IJobOffer{
     ValidateJobOffer(obj){
@@ -289,6 +290,131 @@ class JobOfferManager  extends IJobOffer{
             throw error.status ? error : { status: 500, message: "Server error" };
         }
     }
+
+    //Search jobs
+//     async SearchJob(queryData) {
+// //   const query = req.query.query;
+// let {page,limit,...query}=queryData;
+//         console.log("queriesss: ",query.query);
+//         query=query.query;
+//          page = parseInt(page) || 1; // Page actuelle
+//          limit = parseInt(limit) || 5;
+//         const skip = (page - 1) * limit;
+// let companyID="",categoryID="";
+//      companyID=await Company.findOne({name:query});
+//      categoryID=await Category.findOne({name:query});
+//      if(companyID){
+//      companyID=companyID._id;
+//      }
+//       if(categoryID){
+//      categoryID=categoryID._id;
+//      }
+
+     
+//     const regex = new RegExp(query, 'i'); // 'i' = insensitive (maj/min)
+
+//     let jobs = await JobOffer.find({
+//       $or: [
+//         { title: regex },
+//         { description: regex },
+//         { location: regex },
+//         { company: companyID },
+//         { category: categoryID},
+//       ]
+//     }).populate("companyID categoryId").skip(skip).limit(limit);
+//     const total = await JobOffer.find({
+//       $or: [
+//         { title: regex },
+//         { description: regex },
+//         { location: regex },
+//         { companyID: companyID },
+//         { categoryId: categoryID},
+
+//       ]
+//     }).countDocuments();
+// let jobOffersWithCategory = [];
+
+//         for (let job of jobs) {
+//             // Récupérer la catégorie associée à chaque offre d'emploi
+//             const categoryExist = await Category.findById(job.categoryId);
+    
+//             if (!categoryExist) {
+//                 throw { status: 404, message: "Category doesn't exist" };
+//             }
+
+//             // Ajouter la catégorie aux informations de l'offre d'emploi
+//             const jobOfferWithCategory = {
+//                 ...job.toObject(), // Convertir le JobOffer en objet JS simple
+//                 category: categoryExist.name // Ajouter le nom de la catégorie
+//             };
+    
+//             jobOffersWithCategory.push(jobOfferWithCategory);
+//         }
+//         if(jobOffersWithCategory.length>0){
+//         jobs=jobOffersWithCategory;
+
+//         }
+
+
+//     if(jobs){
+//         return {total,jobs};
+//     }
+//     // throw { status: 404, message: "No jobs doesn't exist" };
+
+// }
+async SearchJob(queryData) {
+
+  let { page, limit, query,location } = queryData; // ✅ directement récupérer `query`
+  console.log("query string:", query);
+
+  page = parseInt(page) || 1;
+  limit = parseInt(limit) || 5;
+  const skip = (page - 1) * limit;
+
+  const regex = new RegExp(query, 'i');
+  console.log("regex ; ",regex)
+    const regexLocation = new RegExp(location, 'i');
+
+
+  // Recherche d'ID si le texte correspond à un nom de company ou catégorie
+  let company = await Company.find({ name: regex });
+//   console.log("company   :  : ",company)
+  let category = await Category.findOne({ name: regex });
+//   console.log("category   :  : ",category)
+
+  const filters = {
+     $and: [
+    {
+      $or: [
+        { title: regex },
+        { description: regex },
+        { companyID: company?._id },
+        { categoryId: category?._id }
+      ]
+    },
+    ...(location ? [{ location: regexLocation }] : [])
+  ]
+  };
+
+  const jobs = await JobOffer.find(filters)
+    .populate("companyID categoryId")
+    .skip(skip)
+    .limit(limit);
+
+  const total = await JobOffer.countDocuments(filters);
+
+  const jobOffersWithCategory = await Promise.all(
+    jobs.map(async (job) => {
+      const categoryExist = await Category.findById(job.categoryId);
+      return {
+        ...job.toObject(),
+        category: categoryExist?.name || null
+      };
+    })
+  );
+
+  return { total, jobs: jobOffersWithCategory };
+}
 
 }
 module.exports=new JobOfferManager();

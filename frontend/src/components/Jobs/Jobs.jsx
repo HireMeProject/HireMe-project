@@ -6,7 +6,6 @@ import { useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
 import {JobContext } from "../Auth/Context/JobContext";
 
-
 const Jobs = ({
   filtreCategory,
   filtreEmploymentType,
@@ -77,7 +76,7 @@ const Jobs = ({
         toast.error("Failed to load companies. Please try again.");
     }
   }
-  
+  console.log("jobsssssssssss:::::",jobs)
 
   return (
     <div className="All-jobs-wrapper">

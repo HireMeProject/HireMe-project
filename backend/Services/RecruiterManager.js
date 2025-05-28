@@ -36,7 +36,11 @@ class RecruiterManager extends IRecruiter{
     }
     //Get Candidates Profile
     async GetCandidateProfile(query,recruiterId,applicationId){
+        console.log("app id in getcandprofile: ",applicationId)
+        console.log("recruiter id in getcandprofile: ",recruiterId)
         const application=await ApplicationManager.GetApplicationById(query,recruiterId,applicationId);
+                console.log("app0 in getcandprofile: ",application)
+
         const candidateId=application.candidateID;
         const candidate= await CandidateManager.GetProfile(candidateId);
         if(!candidate){
